@@ -27,6 +27,7 @@ install_to() {
   local dest="$1/${SKILL_NAME}"
   mkdir -p "${dest}/templates" "${dest}/prompts"
   cp "${SRC_DIR}/SKILL.md" "${dest}/SKILL.md"
+  cp "${SRC_DIR}/llm-wiki.md" "${dest}/llm-wiki.md"
   cp "${SRC_DIR}/templates/context-model-template.md" "${dest}/templates/"
   cp "${SRC_DIR}/prompts/interview-prompt.md" "${dest}/prompts/"
   echo "✅ Installed: ${dest}"

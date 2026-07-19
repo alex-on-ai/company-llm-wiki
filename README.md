@@ -6,6 +6,8 @@ Every AI assistant — ChatGPT, Claude, an n8n agent — is a brilliant employee
 
 This repo gives you:
 
+- **`llm-wiki.md`** — the original pattern document by Andrej Karpathy, included verbatim (it "is designed to be copy pasted to your own LLM Agent"); this repo is one company-shaped instantiation of it
+
 - **`templates/context-model-template.md`** — the 10-section Company Context Model template
 - **`prompts/interview-prompt.md`** — a universal interview prompt that runs in **any AI chat** (ChatGPT, Claude, Gemini, anything), no tools required
 - **`prompts/ingest-prompt.md`** — step two: grow the folder into a small **LLM wiki** (pattern: Karpathy) — drop transcripts and documents into `raw/`, the agent files them as linked pages and produces the work outputs. Each ingest compounds

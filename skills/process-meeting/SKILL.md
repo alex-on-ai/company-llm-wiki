@@ -1,6 +1,6 @@
 ---
 name: process-meeting
-description: Process a meeting end to end - ingest the transcript or call notes into the company's LLM wiki, then produce the work products - team task list with owners, action items for the owner, decisions waiting with recommendations, a spec for the main deliverable, client-facing reply drafts. Requires a company folder with context-model.md (create one with /build-context-model). Triggers - "process meeting", "/process-meeting", "process this call", "ingest this meeting", "file this meeting", "turn this meeting into tasks".
+description: Process a meeting end to end - ingest the transcript or call notes into the company's LLM wiki, then produce the work products - team task list with owners, action items for the owner, decisions waiting with recommendations, a spec for the main deliverable, client-facing reply drafts. Uses the root-level context-model.md created immediately by /build-context-model; unresolved gaps never block processing. Triggers - "process meeting", "/process-meeting", "process this call", "ingest this meeting", "file this meeting", "turn this meeting into tasks".
 ---
 
 # Process a meeting - filed knowledge + finished drafts
@@ -9,11 +9,14 @@ The context model answers "who are we". Processing a meeting answers "what just 
 
 ## Step 0 - preconditions
 
-1. Find `context-model.md` in the current folder (or the folder the user names). If missing → stop and suggest `/build-context-model` first; processing without context produces generic output.
-2. Ensure the folder shape exists - create missing dirs silently:
+1. Resolve the **wiki root** as the exact current folder (or the exact folder the user names). Never create a nested company folder.
+2. Find root-level `context-model.md`. Proceed when it contains `[GAP]` or `⚠ UNVERIFIED`; use verified facts, preserve unknowns, and keep unverified claims out of client-facing drafts. Gaps are not a precondition failure.
+3. Legacy repair: if `context-model.md` is missing but `output/context-model-draft.md` exists from an older skill version, promote that file to root-level `context-model.md`, keep its gap markers, record the repair in `log.md`, and continue. Do not retain a second model file.
+4. If neither a model nor a legacy draft exists, stop and run `/build-context-model` in this same wiki root. That build creates `context-model.md` immediately.
+5. Ensure the folder shape exists - create missing dirs silently:
 
 ```
-[company]/
+./
 ├── AGENTS.md + CLAUDE.md ← the schema (written by /build-context-model)
 ├── llm-wiki.md           ← the pattern doc (copy from the skill directory if missing; fallback: download https://raw.githubusercontent.com/alex-on-ai/company-llm-wiki/main/llm-wiki.md)
 ├── context-model.md      ← who we are (built by /build-context-model)
@@ -24,11 +27,11 @@ The context model answers "who are we". Processing a meeting answers "what just 
 └── output/               ← ready-to-use work products
 ```
 
-3. Locate the source: the file the user named, else the newest unprocessed file in `raw/`. If the user pasted text instead of a file, save it first as `raw/YYYY-MM-DD - [short title].md` - raw material always lands in `raw/` before processing.
+6. Locate the source: the file the user named, else the newest unprocessed file in `raw/`. If the user pasted text instead of a file, save it first as `raw/YYYY-MM-DD - [short title].md` - raw material always lands in `raw/` before processing.
 
 ## Step 1 - read context first
 
-Read `context-model.md` (who we are, team, voice, operating rules), then any existing `wiki/` pages for entities this meeting touches. Never process a source blind - the whole point is that output is specific to this company.
+Read `context-model.md` (who we are, team, voice, operating rules), then any existing `wiki/` pages for entities this meeting touches. Never process a source blind - the whole point is that output is specific to this company. When a needed field is `[GAP]`, use a conservative fallback and mark it `(to clarify)` rather than stopping.
 
 ## Step 2 - ingest: file the knowledge
 
@@ -71,6 +74,8 @@ Flags:    [unknowns marked "to clarify", risks worth reading first]
 4. **Newer fact wins**, and the wiki page records the change.
 5. **Respond in the user's language; write wiki pages and outputs in English** unless asked otherwise.
 6. **Each meeting compounds.** Re-read touched wiki pages before writing - the more the wiki knows, the sharper the next outputs get.
+7. **Gaps never block processing.** Use verified context, exclude `⚠ UNVERIFIED` claims from client-facing drafts, and mark missing owners, deadlines, or facts `(to clarify)`.
+8. **One root, one model.** Work in the exact wiki root and use only root-level `context-model.md`.
 
 # Attribution
 

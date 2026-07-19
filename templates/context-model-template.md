@@ -1,5 +1,4 @@
 ---
-slug: [COMPANY_SLUG]
 created: [YYYY-MM-DD]
 last_updated: [YYYY-MM-DD]
 language: en

@@ -2,7 +2,7 @@
 # Install the company-llm-wiki skills (build-context-model, process-meeting, ingest)
 # for Claude Code and Codex.
 # Run it FROM YOUR PROJECT FOLDER (the folder where the company wiki will live):
-# ../path/to/install.sh          → installs into ./.claude/skills of the current folder (default)
+# ../path/to/install.sh          → installs into ./.claude/skills and ./.codex/skills of the current folder (default)
 # ../path/to/install.sh --global → installs machine-wide: ~/.claude/skills and ~/.codex/skills
 # ./install.sh --chatgpt         → copies the interview paste-pack (prompt + template) to the clipboard
 # ./install.sh --chatgpt ingest  → copies the ingest prompt to the clipboard
@@ -74,6 +74,7 @@ else
   done
   installed=1
   echo "Installed into this project (./.claude/skills + ./.codex/skills). Run your agent from this folder."
+  echo "This current folder is the wiki root; /build-context-model writes ./context-model.md here and does not create a nested company folder."
   echo "Machine-wide instead: ./install.sh --global"
 fi
 

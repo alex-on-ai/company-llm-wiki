@@ -12,10 +12,10 @@ Three commands:
 | `/process-meeting` | Ingests a transcript into linked wiki pages, then produces team tasks with owners, your action items, decisions with recommendations, a spec, client-facing drafts | every meeting |
 | `/ingest` | Files any other material into the wiki: articles, client emails, proposals, notes | as it arrives |
 
-The folder it maintains:
+The working folder is the wiki root. The build never creates a second company-named folder inside it:
 
 ```
-[your-company]/
+[wiki-root]/
 ├── AGENTS.md + CLAUDE.md the schema: how this wiki operates
 ├── llm-wiki.md           the pattern doc (Karpathy)
 ├── context-model.md      who we are; feeds every AI surface you use
@@ -26,7 +26,7 @@ The folder it maintains:
 └── output/               ready-to-use work: tasks, specs, draft letters
 ```
 
-The build writes the schema into the folder itself (`AGENTS.md` for Codex, `CLAUDE.md` for Claude Code, same content). That makes the wiki self-describing: any agent opened in the folder knows how to operate it, with or without these skills installed.
+The build writes the schema and a usable `context-model.md` into the working folder itself (`AGENTS.md` for Codex, `CLAUDE.md` for Claude Code, same content). That makes the wiki self-describing: any agent opened in the folder knows how to operate it, with or without these skills installed. Unknown facts stay marked `[GAP]`; they do not block `/process-meeting` or `/ingest`.
 
 ## Install
 
@@ -34,7 +34,7 @@ The build writes the schema into the folder itself (`AGENTS.md` for Codex, `CLAU
 
 > Install the skills from https://github.com/alex-on-ai/company-llm-wiki into this project, then build my company's context model. Read that repo's README section "Install notes for agents" first and follow it exactly.
 
-The agent installs locally and flows straight into the build - the build's own step 0 asks you to confirm sources and location before anything is created.
+The agent installs locally and flows straight into the build - the build's own step 0 asks you to confirm the exact wiki root, company name, and sources before anything is created.
 
 **Terminal.** The skills live with the company folder they operate on, so install from inside it:
 
@@ -43,6 +43,8 @@ git clone https://github.com/alex-on-ai/company-llm-wiki.git
 mkdir your-company && cd your-company
 ../company-llm-wiki/install.sh
 ```
+
+Run the installer from the folder that should contain `context-model.md`, `raw/`, `wiki/`, and `output/`. `/build-context-model` populates that exact folder; it does not create another `your-company/` directory inside it.
 
 Machine-wide instead (every project, Claude Code + Codex): `./install.sh --global`.
 
@@ -58,7 +60,7 @@ If a user asks you to install this repo's skills, follow these steps exactly. Do
 2. Destination is the current project: BOTH `./.claude/skills/` and `./.codex/skills/` (create the directories if missing; Claude Code reads the first, Codex the second). Use `~/.claude/skills/` plus `~/.codex/skills/` only if the user explicitly asked for a global install.
 3. Copy ALL THREE folders under `skills/` (`build-context-model`, `process-meeting`, `ingest`) into each destination - a partial install is a failed install. Into every installed skill folder also copy the repo's `llm-wiki.md`; into `build-context-model/` additionally copy `templates/` and `prompts/interview-prompt.md`.
 4. Remove the temporary clone and verify: each destination contains the three skill folders, each with a `SKILL.md`.
-5. Treat "install" as "install and set up": the user's goal is a working company wiki, not files on disk. After verifying the install, immediately open the installed `build-context-model/SKILL.md`, read it fully, and execute it as your instructions in this same session (freshly installed skills register only in new sessions - that is why you execute the file directly). Do NOT end your turn after installing: your turn ends either on the build's step 0 questions to the user (location, slug, sources - the consent gate) or after the build completes. Mention that from the next session onward the commands are `/build-context-model` (once), `/process-meeting` (every meeting), `/ingest` (anything else).
+5. Treat "install" as "install and set up": the user's goal is a working company wiki, not files on disk. After verifying the install, immediately open the installed `build-context-model/SKILL.md`, read it fully, and execute it as your instructions in this same session (freshly installed skills register only in new sessions - that is why you execute the file directly). Do NOT end your turn after installing: your turn ends either on the build's step 0 questions to the user (exact wiki root, company name, sources - the consent gate) or after the build completes. The build must write root-level `context-model.md` immediately; optional gap questions never gate completion. Mention that from the next session onward the commands are `/build-context-model` (once), `/process-meeting` (every meeting), `/ingest` (anything else).
 6. If any skill instruction conflicts with your environment, adapt minimally, tell the user what you changed and why, and record it in `./skill-feedback.md` in the project - that file is how improvements travel upstream (the user can open an issue or PR on this repo from it).
 
 ## Deliberately strict
@@ -66,6 +68,8 @@ If a user asks you to install this repo's skills, follow these steps exactly. Do
 1. **Verification markers.** Claims are tagged `✓ confirmed` / `✓ source` / `⚠ UNVERIFIED`. Unverified claims never enter client-facing output.
 2. **Drafts only.** Client-facing work lands in `output/` for your review; the agent never sends anything.
 3. **One cornerstone file.** `context-model.md` gets refreshed weekly and uploaded everywhere; the wiki grows around it.
+4. **One working folder.** The current project folder is the wiki root. No nested company folder.
+5. **Gaps are non-blocking.** The build creates `context-model.md` immediately and refines it in place; `[GAP]` and `⚠ UNVERIFIED` markers stay visible without blocking later skills.
 
 ## Where this comes from
 

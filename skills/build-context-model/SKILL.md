@@ -1,6 +1,6 @@
 ---
 name: build-context-model
-description: Build and maintain a Company Context Model - the single document that lets any AI assistant (ChatGPT, Claude, n8n agents) produce specific, on-brand, delegation-ready output instead of generic slop. Two build modes - /build harvest (draft from existing materials: website, docs, repos; ask only the gaps) and /build interview (guided interview in batches). /refresh runs the weekly update ritual. Triggers - "build context model", "build my context model", "/build-context-model", "/build", "/refresh", "set up company context", "my AI answers are generic".
+description: Build and maintain a Company Context Model - the root-level document that lets any AI assistant (ChatGPT, Claude, n8n agents) produce specific, on-brand, delegation-ready output instead of generic slop. /build writes a usable context-model.md immediately, then enriches it from sources or an interview; unresolved gaps stay visible but never block later skills. /refresh runs the weekly update ritual. Triggers - "build context model", "build my context model", "/build-context-model", "/build", "/refresh", "set up company context", "my AI answers are generic".
 ---
 
 # Context Model - the company's operating context for AI
@@ -31,22 +31,24 @@ Two commands:
 
 Confirm with the user in one message:
 
-1. **Output location** - where to create the folder. Default: current working directory.
-2. **Company slug** - latin, no spaces (e.g. `acme-logistics`).
+1. **Wiki root** - the exact folder to populate. Default: the current working directory. This folder is both the project root and the wiki root.
+2. **Company name** - the name written into the schema and context model.
 3. **Existing materials** - most companies have three: a **website URL**, a **company LinkedIn page**, and a **local folder with documents** (presentations, price lists, proposals, service descriptions). Also welcome: pitch deck, testimonials, prior briefs; for technical users - repo paths. This decides the mode:
    - Anything provided → **harvest mode** (default)
    - Nothing → **interview mode** ("nothing" is fine - the interview covers it)
 
-## Folder created
+**Path invariant:** the confirmed wiki root is exact. If the user confirms `/work/HighCraft`, write `/work/HighCraft/context-model.md`. Never create a second company-named folder inside it.
+
+## Populate the wiki root
 
 Create the FULL structure immediately, before harvesting or interviewing - the user must see the whole machine after step 0, not just its first piece:
 
 ```
-[slug]/
+./
 ├── AGENTS.md             ← the schema: how this wiki operates (Codex reads this name)
 ├── CLAUDE.md             ← same content (Claude Code reads this name)
 ├── llm-wiki.md           ← the original pattern doc (Karpathy)
-├── context-model.md      ← the cornerstone page: who we are (written at Synthesis)
+├── context-model.md      ← usable cornerstone page: who we are, gaps allowed
 ├── index.md              ← catalog: one line per wiki page
 ├── log.md                ← append-only record of what happened when
 ├── raw/                  ← immutable source material (site dumps, docs, notes)
@@ -60,8 +62,9 @@ Then, in order:
 2. **Read `llm-wiki.md`.** You are instantiating that pattern for a company; the file explains why each piece exists.
 3. Write `AGENTS.md` from the schema template below, and write the identical content to `CLAUDE.md`. With the schema in place, ANY agent opened in this folder knows how to operate the wiki - even without these skills installed. That is the point of the pattern.
 4. Create `index.md` (header only for now) and `log.md` with its first entry: `## [YYYY-MM-DD] build | folder scaffolded`.
+5. Create `context-model.md` now from `templates/context-model-template.md`. Fill everything already known from step 0 and mark every unknown as `[GAP]`. This is the real cornerstone page, not a draft file.
 
-`context-model.md` is the only piece that arrives at the end (Synthesis step). It stays one master file, deliberately: it is the page every AI surface consumes, so it must remain uploadable as a single document.
+From this point onward, `/process-meeting` and `/ingest` may run. `[GAP]` and `⚠ UNVERIFIED` markers reduce precision but never block those operations. Keep one master file deliberately: update root-level `context-model.md` in place and never create `output/context-model-draft.md`, `context-model-draft.md`, or a second model elsewhere.
 
 ## The schema (write as AGENTS.md, copy to CLAUDE.md)
 
@@ -93,21 +96,23 @@ The agent maintains everything except `raw/`; the human curates sources and revi
 3. Claims marked `⚠ UNVERIFIED` never enter client-facing output.
 4. Wiki pages and outputs in English; respond in the user's language.
 5. Anything client-facing is a draft. Never send or execute anything.
+6. `[GAP]` markers never block ingest or meeting processing. Use verified context and keep unknowns visible as `(to clarify)`.
+7. This current folder is the wiki root. Never create a nested company folder or a second context model.
 ```
 
 ## Harvest mode (materials exist)
 
 1. Read every provided source. Start from the website: fetch the key pages (home, services, about, cases). Then the LinkedIn page, the local folder's documents, decks, and any repo files. If a URL can't be fetched (login-walled, common for LinkedIn), use a connected browser tool if available; otherwise ask the user to paste the page text instead of skipping the source. Save extracts worth keeping into `raw/`.
-2. Draft ALL sections of `templates/context-model-template.md` from sources. Mark every fact you could not source as `[GAP]`.
+2. Update ALL sections of root-level `context-model.md` directly from sources. Mark every fact you could not source as `[GAP]`. Do not write a separate draft.
 3. **File durable entities as wiki pages.** A website harvest typically yields 3-8 pages: one page per named case study or flagship product (`wiki/cases/`), plus topics worth their own page - named competitors, the market segment, a signature method (`wiki/topics/`). Link them from the relevant context-model sections with `[[Page Name]]`, add each to `index.md`. This is what makes the folder a wiki and not one file with empty directories.
-4. Ask the user ONLY the `[GAP]` questions - in batches of 3-4, never one by one. Skip entire batches that sources already answered.
-5. Then run the Verification pass (below).
+4. Run the Verification pass (below) on the current model.
+5. Close the build as usable, then ask the user ONLY the highest-value `[GAP]` questions in batches of 3-4. These questions refine the model; they do not gate completion or later commands. If the user does not answer, keep the markers and continue to treat the model as valid.
 
 **Never pad.** A short, true section beats a full, invented one.
 
 ## Interview mode (blank start)
 
-Ask in **6 batches of 3-4 questions**. Write answers into the draft after each batch. Max 18 questions total; skip anything already answered.
+`context-model.md` already exists from the scaffold. Ask in **6 batches of 3-4 questions** and write answers into that file after each batch. Max 18 questions total; skip anything already answered. If the interview pauses, leave the remaining `[GAP]` markers in place; the model and downstream skills remain usable. Never create a draft variant.
 
 ### Batch 1 - Identity
 1. Company name + one plain-language sentence: what do you do?
@@ -153,7 +158,9 @@ Unverified claims stay in the document but keep the `⚠ UNVERIFIED` marker. AI 
 
 ## Synthesis
 
-Generate `context-model.md` from `templates/context-model-template.md` - 10 sections + changelog. The relationship to the wiki: **the wiki is the source of truth, the context model is the compiled artifact** - the wiki's synthesis page, kept short and portable because it gets uploaded to ChatGPT Projects, pasted into system prompts, and read first by every agent. Detail belongs in wiki pages; the model links to them with `[[Page Name]]` instead of absorbing them. `/refresh` recompiles it as the wiki learns.
+Refine the existing root-level `context-model.md` into the 10 sections + changelog from `templates/context-model-template.md`. The relationship to the wiki: **the wiki is the source of truth, the context model is the compiled artifact** - the wiki's synthesis page, kept short and portable because it gets uploaded to ChatGPT Projects, pasted into system prompts, and read first by every agent. Detail belongs in wiki pages; the model links to them with `[[Page Name]]` instead of absorbing them. `/refresh` recompiles it as the wiki learns.
+
+The model is a proper page throughout the build, even when incomplete. Never put it under `output/`, never rename it to a draft, and never withhold it until all gaps are answered.
 
 Concreteness rule: if a section reads like it could describe any company in the industry, it is not done; push for the specific detail.
 
@@ -164,10 +171,11 @@ Then close the books: update `index.md` (one line per page, context-model.md fir
 ```
 ✅ LLM wiki set up for [Company].
 
-Cornerstone: ./[slug]/context-model.md
+Cornerstone: ./context-model.md
 Wiki pages:  [N] filed (see index.md)
 Schema:      AGENTS.md + CLAUDE.md - any agent opened here knows how this wiki works
 Gaps:        [N] (marked [GAP] / ⚠ UNVERIFIED inside)
+Status:      usable now - gaps do not block /process-meeting or /ingest
 
 USE IT NOW:
 → ChatGPT: create a Project, upload context-model.md, ask anything
@@ -206,6 +214,8 @@ Precondition: `context-model.md` exists (else suggest `/build`).
 8. **Don't re-ask what the model already contains** - read it first.
 9. **Short beats padded.** Empty template lines are deleted, not filled with fluff.
 10. **Scope: company context for AI assistants.** Not a resume, not a marketing site, not a brand book.
+11. **The wiki root is exact.** Never create a nested company folder.
+12. **The cornerstone always exists.** Create `context-model.md` during scaffolding and refine it in place; gaps never turn it into a draft or block downstream skills.
 
 # Dependencies
 

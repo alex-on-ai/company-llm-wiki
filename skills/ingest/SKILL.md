@@ -1,6 +1,6 @@
 ---
 name: ingest
-description: File any raw material into the company's LLM wiki - articles, client emails, proposals, documents, notes. Creates or updates linked pages under wiki/, cross-references them, reconciles contradictions. Filing only; for the full meeting work package (tasks, spec, drafts) use /process-meeting. Requires a company folder with context-model.md (create one with /build-context-model). Triggers - "ingest", "/ingest", "ingest this", "file this into the wiki", "add this to the wiki".
+description: File any raw material into the company's LLM wiki - articles, client emails, proposals, documents, notes. Creates or updates linked pages under wiki/, cross-references them, reconciles contradictions. Filing only; for the full meeting work package (tasks, spec, drafts) use /process-meeting. Uses the root-level context-model.md created immediately by /build-context-model; unresolved gaps never block filing. Triggers - "ingest", "/ingest", "ingest this", "file this into the wiki", "add this to the wiki".
 ---
 
 # Ingest - file any material into the wiki
@@ -9,11 +9,14 @@ The librarian operation from `llm-wiki.md` (Andrej Karpathy, included in this fo
 
 ## Step 0 - preconditions
 
-1. Find `context-model.md` in the current folder (or the folder the user names). If missing → stop and suggest `/build-context-model` first.
-2. Ensure the folder shape exists - create missing dirs silently:
+1. Resolve the **wiki root** as the exact current folder (or the exact folder the user names). Never create a nested company folder.
+2. Find root-level `context-model.md`. Proceed when it contains `[GAP]` or `⚠ UNVERIFIED`; gaps are not a precondition failure.
+3. Legacy repair: if `context-model.md` is missing but `output/context-model-draft.md` exists from an older skill version, promote that file to root-level `context-model.md`, keep its gap markers, record the repair in `log.md`, and continue. Do not retain a second model file.
+4. If neither a model nor a legacy draft exists, stop and run `/build-context-model` in this same wiki root. That build creates `context-model.md` immediately.
+5. Ensure the folder shape exists - create missing dirs silently:
 
 ```
-[company]/
+./
 ├── AGENTS.md + CLAUDE.md ← the schema (written by /build-context-model)
 ├── llm-wiki.md           ← the pattern doc (copy from the skill directory if missing; fallback: download https://raw.githubusercontent.com/alex-on-ai/company-llm-wiki/main/llm-wiki.md)
 ├── context-model.md      ← who we are (built by /build-context-model)
@@ -24,7 +27,7 @@ The librarian operation from `llm-wiki.md` (Andrej Karpathy, included in this fo
 └── output/               ← work products (written on request)
 ```
 
-3. Locate the source: the file the user named, else the newest unprocessed file in `raw/`. If the user pasted text or a URL, save the content first as `raw/YYYY-MM-DD - [short title].md` - raw material always lands in `raw/` before filing.
+6. Locate the source: the file the user named, else the newest unprocessed file in `raw/`. If the user pasted text or a URL, save the content first as `raw/YYYY-MM-DD - [short title].md` - raw material always lands in `raw/` before filing.
 
 ## Step 1 - read context first
 
@@ -61,6 +64,8 @@ If the user asked for a specific output (a summary, a reply draft, a comparison)
 3. **Newer fact wins**, and the wiki page records the change.
 4. **Respond in the user's language; write wiki pages in English** unless asked otherwise.
 5. **Anything client-facing is a draft** - never send or execute.
+6. **Gaps never block filing.** Use verified context, preserve unknowns as `(to clarify)`, and never promote `⚠ UNVERIFIED` claims into client-facing output.
+7. **One root, one model.** Work in the exact wiki root and use only root-level `context-model.md`.
 
 # Attribution
 

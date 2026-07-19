@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # Install the company-llm-wiki skills (build-context-model, process-meeting, ingest)
 # for Claude Code and Codex.
-# ./install.sh                   → installs globally: ~/.claude/skills and ~/.codex/skills (whichever exist)
-# ./install.sh --local           → installs into ./.claude/skills of the current project only
+# Run it FROM YOUR PROJECT FOLDER (the folder where the company wiki will live):
+# ../path/to/install.sh          → installs into ./.claude/skills of the current folder (default)
+# ../path/to/install.sh --global → installs machine-wide: ~/.claude/skills and ~/.codex/skills
 # ./install.sh --chatgpt         → copies the interview paste-pack (prompt + template) to the clipboard
 # ./install.sh --chatgpt ingest  → copies the ingest prompt to the clipboard
 set -euo pipefail
@@ -45,13 +46,7 @@ install_skill() {
 }
 
 installed=0
-if [[ "${1:-}" == "--local" ]]; then
-  for name in build-context-model process-meeting ingest; do
-    install_skill "${name}" "${PWD}/.claude/skills"
-  done
-  installed=1
-  echo "Installed into this project only (./.claude/skills). Run the agent from this folder."
-else
+if [[ "${1:-}" == "--global" ]]; then
   for root in "${HOME}/.claude" "${HOME}/.codex"; do
     if [[ -d "${root}" ]]; then
       for name in build-context-model process-meeting ingest; do
@@ -60,13 +55,24 @@ else
       installed=1
     fi
   done
-fi
-
-if [[ "${installed}" == "0" ]]; then
-  echo "No ~/.claude or ~/.codex found. Install Claude Code or Codex first,"
-  echo "use ./install.sh --local from your project folder,"
-  echo "or the no-install path: ./install.sh --chatgpt (works with any AI chat)."
-  exit 1
+  if [[ "${installed}" == "0" ]]; then
+    echo "No ~/.claude or ~/.codex found. Install Claude Code or Codex first,"
+    echo "or the no-install path: ./install.sh --chatgpt (works with any AI chat)."
+    exit 1
+  fi
+else
+  if [[ "${PWD}" == "${SRC_DIR}" ]]; then
+    echo "You are inside the kit repo itself. cd into your project folder first:"
+    echo "  cd path/to/your-company-folder && ${SRC_DIR}/install.sh"
+    echo "Or install machine-wide from anywhere: ./install.sh --global"
+    exit 1
+  fi
+  for name in build-context-model process-meeting ingest; do
+    install_skill "${name}" "${PWD}/.claude/skills"
+  done
+  installed=1
+  echo "Installed into this project (./.claude/skills). Run your agent from this folder."
+  echo "Machine-wide instead: ./install.sh --global"
 fi
 
 echo ""

@@ -33,7 +33,7 @@ For each confirmed task: search open tasks in the target team/project for the sa
 
 ## Step 4 - close the books
 
-Add a `Tasks filed:` line with the created links to the meeting's `wiki/meetings/` page, append to `log.md`: `## [YYYY-MM-DD] file-tasks | [meeting] → [tracker]`, then report:
+Add a `Tasks filed:` line with the created links to the meeting's `wiki/meetings/` page, append to `log.md`: `## [YYYY-MM-DD] file-tasks | [meeting] → [tracker]`. If the wiki root is a git repository, commit the bookkeeping changes (message `file-tasks: [meeting]`) and push when a remote exists - the context pointers in the created tasks only help if the remote is current. Then report:
 
 ```
 ✅ Filed [N] tasks to [tracker] ([team/project]):

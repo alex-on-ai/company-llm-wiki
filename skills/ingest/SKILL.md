@@ -47,7 +47,7 @@ Cross-link with `[[Page Name]]`. If a new fact contradicts an earlier one, the n
 
 ## Step 3 - close the books and report
 
-Update `index.md` for every page touched; append to `log.md`: `## [YYYY-MM-DD] ingest | <source title>`. Then:
+Update `index.md` for every page touched; append to `log.md`: `## [YYYY-MM-DD] ingest | <source title>`. If the wiki root is a git repository, commit this run's changes (message `ingest: [source title]`) and push when a remote exists; never `git init` or create remotes from this skill. Then:
 
 ```
 ✅ Ingested: [source file]

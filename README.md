@@ -114,6 +114,7 @@ The build skill bundles the canonical `llm-wiki.md` bootstrap asset. It copies t
 3. **One cornerstone file.** `context-model.md` gets refreshed weekly and uploaded everywhere; the wiki grows around it.
 4. **One working folder.** The current project folder is the wiki root. No nested company folder.
 5. **Gaps are non-blocking.** The build creates `context-model.md` immediately and refines it in place; `[GAP]` and `⚠ UNVERIFIED` markers stay visible without blocking later skills.
+6. **Private by default.** The build offers (never assumes) to version the wiki as a git repo; an accepted push always targets a PRIVATE repository. With a remote in place, `/file-tasks` stamps every created task with a context pointer, so autonomous agents that pick tasks up can clone the wiki and self-serve the background.
 
 ## Where this comes from
 

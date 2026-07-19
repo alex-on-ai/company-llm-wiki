@@ -192,6 +192,18 @@ NEXT:
 → /refresh weekly (10 min) - new wins, changed facts
 ```
 
+## Version the wiki (one offer, after the closing message)
+
+The wiki is most useful as a **private git repository**: versioned, recoverable, and reachable by autonomous agents that pick up tasks with this wiki as their context (`/file-tasks` adds a repo pointer to every task once a remote exists).
+
+- Skip this section silently when git is unavailable or the wiki root is already inside a git repository.
+- Otherwise ask once: "Version this wiki as a git repo and push it to a private GitHub repo? (yes / local only / no)"
+- **yes** → `git init`, commit everything, then create a PRIVATE repo named after the folder and push (`gh repo create <folder-name> --private --source . --push` when the GitHub CLI is authenticated; if it is not, init + commit locally and print the exact manual commands for the user to create the private repo and push). Never create a public repo, and never push without this consent.
+- **local only** → init + commit, no remote.
+- **no** → skip; the wiki works fine as plain files.
+
+Record the choice in `log.md`.
+
 ---
 
 # /refresh - weekly update ritual

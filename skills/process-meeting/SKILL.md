@@ -55,7 +55,7 @@ Default package, written as files into `output/` (skip items the meeting doesn't
 5. **Client-facing draft** - follow-up letter or reply in the company's Voice, honoring commitments made in the meeting.
 6. **Risks** - anything said that threatens scope, deadline, or the relationship.
 
-Then close the books: update `index.md` for every page touched, and append to `log.md`: `## [YYYY-MM-DD] process | <meeting title>`.
+Then close the books: update `index.md` for every page touched, and append to `log.md`: `## [YYYY-MM-DD] process | <meeting title>`. If the wiki root is a git repository, also commit this run's changes (`git add -A`, message `process: [meeting title]`) and push when a remote exists - dispatched agents read the remote, and a stale remote silently feeds them old context. Never `git init` or create remotes from this skill; `/build-context-model` owns that offer.
 
 ## Step 4 - offer to file the tasks
 

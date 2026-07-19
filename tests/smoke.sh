@@ -20,11 +20,18 @@ mkdir -p "${PROJECT_ROOT}"
 for runtime in .claude .agents; do
   for skill in build-context-model process-meeting ingest; do
     test -f "${PROJECT_ROOT}/${runtime}/skills/${skill}/SKILL.md"
-    test -f "${PROJECT_ROOT}/${runtime}/skills/${skill}/llm-wiki.md"
   done
+  test -f "${PROJECT_ROOT}/${runtime}/skills/build-context-model/llm-wiki.md"
+  test ! -e "${PROJECT_ROOT}/${runtime}/skills/process-meeting/llm-wiki.md"
+  test ! -e "${PROJECT_ROOT}/${runtime}/skills/ingest/llm-wiki.md"
   test -f "${PROJECT_ROOT}/${runtime}/skills/build-context-model/templates/context-model-template.md"
   test -f "${PROJECT_ROOT}/${runtime}/skills/build-context-model/prompts/interview-prompt.md"
 done
+
+if [[ -d "${PROJECT_ROOT}/agent" ]]; then
+  echo "Installer created an unrequested agent/ directory" >&2
+  exit 1
+fi
 
 diff -qr "${PROJECT_ROOT}/.claude/skills" "${PROJECT_ROOT}/.agents/skills" >/dev/null
 
@@ -50,12 +57,14 @@ if [[ -d "${GLOBAL_HOME}/.codex/skills" ]]; then
   exit 1
 fi
 
-# Self-contained skill folders: the skills.sh CLI copies only the skill folder,
-# so every asset a skill references must live inside it and match the root copy.
+# The build skill owns the offline bootstrap copy. Downstream skills use the
+# root-level artifact created by /build-context-model and carry no duplicates.
+cmp "${REPO_ROOT}/llm-wiki.md" "${REPO_ROOT}/skills/build-context-model/llm-wiki.md"
 for skill in build-context-model process-meeting ingest; do
-  cmp "${REPO_ROOT}/llm-wiki.md" "${REPO_ROOT}/skills/${skill}/llm-wiki.md"
   test -f "${REPO_ROOT}/skills/${skill}/agents/openai.yaml"
 done
+test ! -e "${REPO_ROOT}/skills/process-meeting/llm-wiki.md"
+test ! -e "${REPO_ROOT}/skills/ingest/llm-wiki.md"
 cmp "${REPO_ROOT}/templates/context-model-template.md" "${REPO_ROOT}/skills/build-context-model/templates/context-model-template.md"
 cmp "${REPO_ROOT}/prompts/interview-prompt.md" "${REPO_ROOT}/skills/build-context-model/prompts/interview-prompt.md"
 
@@ -78,6 +87,12 @@ grep -Fq '`[GAP]` markers never block ingest or meeting processing' "${REPO_ROOT
 grep -Fq 'Gaps never block processing' "${REPO_ROOT}/skills/process-meeting/SKILL.md"
 grep -Fq 'Gaps never block filing' "${REPO_ROOT}/skills/ingest/SKILL.md"
 grep -Fq 'does not create another `your-company/` directory' "${REPO_ROOT}/README.md"
+grep -Fq -- '--skill "*" --agent codex claude-code -y' "${REPO_ROOT}/README.md"
+if grep -Fq -- 'npx skills@latest add alex-on-ai/company-llm-wiki --all' "${REPO_ROOT}/README.md"; then
+  echo "README still recommends the all-agents install" >&2
+  exit 1
+fi
+grep -Fq -- 'Never pass `-g` (these skills are folder-scoped) or `--all`' "${REPO_ROOT}/README.md"
 test "$(sed -n '2p' "${REPO_ROOT}/templates/context-model-template.md")" = 'created: [YYYY-MM-DD]'
 
 if grep -Fq '[company]/' "${REPO_ROOT}/skills/process-meeting/SKILL.md" "${REPO_ROOT}/skills/ingest/SKILL.md"; then

@@ -46,7 +46,7 @@ npx skills@latest add alex-on-ai/company-llm-wiki
 
 Or skip the terminal entirely and paste this into Claude Code or Codex:
 
-> Install the skills from https://github.com/alex-on-ai/company-llm-wiki into this project, then build my company's context model. Follow the repo README's "Install notes for agents" exactly.
+> Run `npx skills@latest add alex-on-ai/company-llm-wiki --all` in this project, then build my company's context model with the build-context-model skill you just installed.
 
 ## Install as a Claude Code plugin
 
@@ -78,13 +78,19 @@ The same flows live in [prompts/](prompts/) as paste-able prompts. From a clone:
 
 ## Install notes for agents
 
-If a user asks you to install this repo's skills:
+If a user asks you to install this repo's skills, the entire install is ONE command, run from the user's project folder:
 
-1. Preferred: run `npx skills@latest add alex-on-ai/company-llm-wiki --all` from the user's project folder. Project-level, never `-g`: these skills are folder-scoped. Verify all THREE skills installed (`build-context-model`, `process-meeting`, `ingest`) - a partial install is a failed install.
-2. Manual fallback: clone the repo to a temporary location, copy the three folders under `skills/` into BOTH `./.claude/skills/` and `./.agents/skills/` of the project (create the directories; the folders are self-contained), then remove the clone.
+```bash
+npx skills@latest add alex-on-ai/company-llm-wiki --all
+```
+
+1. That command is the whole job: no cloning, no copying files, no cleanup afterwards. Never pass `-g` (these skills are folder-scoped) and do not hand-assemble directories - the skill folders are self-contained and the CLI places them correctly (`.agents/skills/` plus agent symlinks).
+2. Verify all THREE skills installed: `build-context-model`, `process-meeting`, `ingest`. A partial install is a failed install; re-run the command rather than repairing by hand.
 3. Do not stop at installing - the user's goal is a working company wiki, not files on disk. Freshly installed skills register only in new sessions, so open the installed `build-context-model/SKILL.md`, read it fully, and execute it as your instructions now. Your turn ends either on the build's step 0 questions (exact wiki root, company name, sources - the consent gate) or after the build completes. The build writes root-level `context-model.md` immediately; gap questions never gate completion.
 4. If any skill instruction conflicts with your environment, adapt minimally, tell the user what you changed and why, and record it in `./skill-feedback.md` in the project - that file is how improvements travel upstream (issue or PR on this repo).
 5. Mention the ongoing commands: `/process-meeting` after every meeting, `/ingest` for any other material, `/refresh` weekly.
+
+(Humans who prefer a manual install: clone the repo and run `./install.sh` from your project folder - but agents should always use the one command above.)
 
 `/build-context-model` populates the exact folder the user confirms; it does not create another `your-company/` directory inside it.
 

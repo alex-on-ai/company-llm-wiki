@@ -92,6 +92,8 @@ grep -Fq 'Gaps never block filing' "${REPO_ROOT}/skills/ingest/SKILL.md"
 grep -Fq 'No confirmation, no writes' "${REPO_ROOT}/skills/file-tasks/SKILL.md"
 grep -Fq 'offer to file the team tasks with `/file-tasks`' "${REPO_ROOT}/skills/process-meeting/SKILL.md"
 grep -Fq 'this command still files by default' "${REPO_ROOT}/skills/ingest/SKILL.md"
+grep -Fq 'you MUST attempt a browser tool before involving the user' "${REPO_ROOT}/skills/build-context-model/SKILL.md"
+grep -Fq 'A personal LinkedIn profile is a normal source, not a mistake' "${REPO_ROOT}/skills/build-context-model/SKILL.md"
 grep -Fq 'does not create another `your-company/` directory' "${REPO_ROOT}/README.md"
 grep -Fq -- '--skill "*" --agent codex claude-code -y' "${REPO_ROOT}/README.md"
 if grep -Fq -- 'npx skills@latest add alex-on-ai/company-llm-wiki --all' "${REPO_ROOT}/README.md"; then

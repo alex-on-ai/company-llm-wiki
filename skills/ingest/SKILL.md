@@ -54,9 +54,17 @@ Update `index.md` for every page touched; append to `log.md`: `## [YYYY-MM-DD] i
 
 Filed:  [N] wiki pages created/updated (list)
 Flags:  [contradictions resolved, unknowns to clarify, refresh suggested]
+Next:   [only when relevant] see Step 4
 ```
 
 If the user asked for a specific output (a summary, a reply draft, a comparison), write it into `output/` as a draft.
+
+## Step 4 - route the follow-up
+
+Offers only - this command still files by default and produces nothing extra without the user asking:
+
+- **The material is a meeting or call transcript** → say so in the closing message: `Next: this is a meeting - /process-meeting produces the full work package (team tasks, action items, spec, drafts)`.
+- **The material contains actionable commitments** (an email with requests, a proposal with obligations and deadlines) → offer to extract them as an owner/task/deadline table into `output/` - the same shape `/process-meeting` produces, so `/file-tasks` can then create them in a connected tracker. Mention `/file-tasks` only when a tracker tool is actually connected; never simulate one.
 
 # Hard rules
 

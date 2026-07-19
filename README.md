@@ -8,8 +8,8 @@ Three commands:
 
 | Skill | What it does | How often |
 |---|---|---|
-| `/build-context-model` | Interviews you or harvests your website + docs into `context-model.md`, the cornerstone page | once |
-| `/process-meeting` | Ingests a transcript into linked wiki pages, then produces team tasks with owners, decisions with recommendations, a spec, client-facing drafts | every meeting |
+| `/build-context-model` | Interviews you or harvests your website, LinkedIn and docs into `context-model.md`, the cornerstone page | once |
+| `/process-meeting` | Ingests a transcript into linked wiki pages, then produces team tasks with owners, your action items, decisions with recommendations, a spec, client-facing drafts | every meeting |
 | `/ingest` | Files any other material into the wiki: articles, client emails, proposals, notes | as it arrives |
 
 The folder it maintains:

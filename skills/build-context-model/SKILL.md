@@ -33,7 +33,7 @@ Confirm with the user in one message:
 
 1. **Output location** - where to create the folder. Default: current working directory.
 2. **Company slug** - latin, no spaces (e.g. `acme-logistics`).
-3. **Existing materials** - most companies have two: a **website URL** and a **local folder with documents** (presentations, price lists, proposals, service descriptions). Also welcome: company LinkedIn page, pitch deck, testimonials, prior briefs; for technical users - repo paths. This decides the mode:
+3. **Existing materials** - most companies have three: a **website URL**, a **company LinkedIn page**, and a **local folder with documents** (presentations, price lists, proposals, service descriptions). Also welcome: pitch deck, testimonials, prior briefs; for technical users - repo paths. This decides the mode:
    - Anything provided → **harvest mode** (default)
    - Nothing → **interview mode** ("nothing" is fine - the interview covers it)
 
@@ -52,7 +52,7 @@ One master file, deliberately. Multi-file structures rot; one file gets updated 
 
 ## Harvest mode (materials exist)
 
-1. Read every provided source. Start from the website: fetch the key pages (home, services, about, cases). Then read the local folder's documents, decks, and any repo files. Save extracts worth keeping into `raw/`.
+1. Read every provided source. Start from the website: fetch the key pages (home, services, about, cases). Then the LinkedIn page, the local folder's documents, decks, and any repo files. If a URL can't be fetched (login-walled, common for LinkedIn), ask the user to paste the page text instead of skipping the source. Save extracts worth keeping into `raw/`.
 2. Draft ALL sections of `templates/context-model-template.md` from sources. Mark every fact you could not source as `[GAP]`.
 3. Ask the user ONLY the `[GAP]` questions - in batches of 3-4, never one by one. Skip entire batches that sources already answered.
 4. Then run the Verification pass (below).

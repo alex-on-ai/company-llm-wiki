@@ -1,6 +1,6 @@
 ---
 name: process-meeting
-description: Process a meeting end to end - ingest the transcript or call notes into the company's LLM wiki, then produce the work products - team task list with owners, decisions waiting for the owner with recommendations, a spec for the main deliverable, client-facing reply drafts. Requires a company folder with context-model.md (create one with /build-context-model). Triggers - "process meeting", "/process-meeting", "process this call", "ingest this meeting", "file this meeting", "turn this meeting into tasks".
+description: Process a meeting end to end - ingest the transcript or call notes into the company's LLM wiki, then produce the work products - team task list with owners, action items for the owner, decisions waiting with recommendations, a spec for the main deliverable, client-facing reply drafts. Requires a company folder with context-model.md (create one with /build-context-model). Triggers - "process meeting", "/process-meeting", "process this call", "ingest this meeting", "file this meeting", "turn this meeting into tasks".
 ---
 
 # Process a meeting - filed knowledge + finished drafts
@@ -42,10 +42,11 @@ Cross-link with `[[Page Name]]`. If a new fact contradicts an earlier one, the n
 Default package, written as files into `output/` (skip items the meeting doesn't support; the user can name a different set):
 
 1. **Team tasks** - table with owner, task, deadline. Owners come from the Team section of the context model; if no owner fits, assign to the user and say so.
-2. **Decisions waiting for the owner** - each with a recommendation and one line of reasoning, not a bare list.
-3. **Spec** - when the meeting implies a deliverable (a prototype, a feature, a document), draft the spec/statement of work for it.
-4. **Client-facing draft** - follow-up letter or reply in the company's Voice, honoring commitments made in the meeting.
-5. **Risks** - anything said that threatens scope, deadline, or the relationship.
+2. **Owner action items** - what only the owner can do (calls, approvals, intros, sign-offs), each with a deadline. Separate from team tasks so it reads as a personal to-do list.
+3. **Decisions waiting for the owner** - each with a recommendation and one line of reasoning, not a bare list.
+4. **Spec** - when the meeting implies a deliverable (a prototype, a feature, a document), draft the spec/statement of work for it.
+5. **Client-facing draft** - follow-up letter or reply in the company's Voice, honoring commitments made in the meeting.
+6. **Risks** - anything said that threatens scope, deadline, or the relationship.
 
 ## Closing message
 

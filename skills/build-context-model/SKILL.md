@@ -52,7 +52,7 @@ One master file, deliberately. Multi-file structures rot; one file gets updated 
 
 ## Harvest mode (materials exist)
 
-1. Read every provided source. Start from the website: fetch the key pages (home, services, about, cases). Then the LinkedIn page, the local folder's documents, decks, and any repo files. If a URL can't be fetched (login-walled, common for LinkedIn), ask the user to paste the page text instead of skipping the source. Save extracts worth keeping into `raw/`.
+1. Read every provided source. Start from the website: fetch the key pages (home, services, about, cases). Then the LinkedIn page, the local folder's documents, decks, and any repo files. If a URL can't be fetched (login-walled, common for LinkedIn), use a connected browser tool if available; otherwise ask the user to paste the page text instead of skipping the source. Save extracts worth keeping into `raw/`.
 2. Draft ALL sections of `templates/context-model-template.md` from sources. Mark every fact you could not source as `[GAP]`.
 3. Ask the user ONLY the `[GAP]` questions - in batches of 3-4, never one by one. Skip entire batches that sources already answered.
 4. Then run the Verification pass (below).
@@ -157,7 +157,7 @@ Precondition: `context-model.md` exists (else suggest `/build`).
 
 # Dependencies
 
-Agent built-ins only (web fetch for harvest mode) - works the same in Claude Code and Codex. No MCP servers or API keys required. If better tools happen to be connected, use them opportunistically: Firecrawl for large or JS-heavy site crawls, Apify for LinkedIn pages that block plain fetch. Never require them; the fallback is always built-in fetch plus asking the user to paste blocked pages.
+Agent built-ins only (web fetch for harvest mode) - works the same in Claude Code and Codex. No MCP servers or API keys required. For login-walled pages (common for LinkedIn), use a connected browser tool if one is available; otherwise ask the user to paste the page text.
 
 # Attribution
 

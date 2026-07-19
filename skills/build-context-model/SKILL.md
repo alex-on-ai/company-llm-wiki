@@ -123,7 +123,8 @@ USE IT NOW:
 → n8n agent: paste into the system prompt as CONTEXT block
 
 NEXT:
-→ /ingest-meeting - drop a transcript in raw/, get wiki pages + tasks + drafts
+→ /process-meeting - transcript in raw/ → wiki pages + tasks + spec + drafts
+→ /ingest - file any other material into the wiki
 → /refresh weekly (10 min) - new wins, changed facts
 ```
 

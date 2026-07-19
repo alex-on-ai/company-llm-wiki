@@ -1,15 +1,15 @@
 ---
-name: ingest-meeting
-description: Ingest a meeting transcript, call notes, or any raw document into the company's LLM wiki and produce the work products - team task list with owners, decisions waiting for the owner with recommendations, a spec for the main deliverable, client-facing reply drafts. Requires a company folder with context-model.md (create one with /build-context-model). Triggers - "ingest meeting", "/ingest-meeting", "ingest this transcript", "process this call", "file this meeting", "turn this meeting into tasks".
+name: process-meeting
+description: Process a meeting end to end - ingest the transcript or call notes into the company's LLM wiki, then produce the work products - team task list with owners, decisions waiting for the owner with recommendations, a spec for the main deliverable, client-facing reply drafts. Requires a company folder with context-model.md (create one with /build-context-model). Triggers - "process meeting", "/process-meeting", "process this call", "ingest this meeting", "file this meeting", "turn this meeting into tasks".
 ---
 
-# Ingest - turn one meeting into filed knowledge + finished drafts
+# Process a meeting - filed knowledge + finished drafts
 
-The context model answers "who are we". An ingest answers "what just happened and what do we do about it". Every document you drop in does two things: it enriches the linked wiki AND produces the work you need from it. The pattern is Andrej Karpathy's LLM wiki - included as `llm-wiki.md`; read it once.
+The context model answers "who are we". Processing a meeting answers "what just happened and what do we do about it". Two steps: **ingest** (file the knowledge into the wiki) and **process** (produce the work). For non-meeting material that only needs filing, use `/ingest`. The pattern is Andrej Karpathy's LLM wiki - included as `llm-wiki.md`; read it once.
 
 ## Step 0 - preconditions
 
-1. Find `context-model.md` in the current folder (or the folder the user names). If missing → stop and suggest `/build-context-model` first; an ingest without context produces generic output.
+1. Find `context-model.md` in the current folder (or the folder the user names). If missing → stop and suggest `/build-context-model` first; processing without context produces generic output.
 2. Ensure the folder shape exists - create missing dirs silently:
 
 ```
@@ -25,21 +25,21 @@ The context model answers "who are we". An ingest answers "what just happened an
 
 ## Step 1 - read context first
 
-Read `context-model.md` (who we are, team, voice, operating rules), then any existing `wiki/` pages for entities this material touches. Never process a source blind - the whole point is that output is specific to this company.
+Read `context-model.md` (who we are, team, voice, operating rules), then any existing `wiki/` pages for entities this meeting touches. Never process a source blind - the whole point is that output is specific to this company.
 
-## Step 2 - file the knowledge
+## Step 2 - ingest: file the knowledge
 
-Create or update linked pages under `wiki/` for every entity the material touches:
+Create or update linked pages under `wiki/` for every entity the meeting touches:
 
 - `wiki/clients/[Client Name].md` - who they are, status, key facts, open threads
 - `wiki/meetings/YYYY-MM-DD - [topic].md` - what was said, decided, promised
-- `wiki/projects/[Project].md` - when the material concerns an ongoing effort
+- `wiki/projects/[Project].md` - when the meeting concerns an ongoing effort
 
 Cross-link with `[[Page Name]]`. If a new fact contradicts an earlier one, the newer wins and the page notes the change. Never invent facts; mark unknowns `(to clarify)`.
 
-## Step 3 - produce the work
+## Step 3 - process: produce the work
 
-Default package, written as files into `output/` (skip items the material doesn't support; the user can name a different set):
+Default package, written as files into `output/` (skip items the meeting doesn't support; the user can name a different set):
 
 1. **Team tasks** - table with owner, task, deadline. Owners come from the Team section of the context model; if no owner fits, assign to the user and say so.
 2. **Decisions waiting for the owner** - each with a recommendation and one line of reasoning, not a bare list.
@@ -50,7 +50,7 @@ Default package, written as files into `output/` (skip items the material doesn'
 ## Closing message
 
 ```
-✅ Ingested: [source file]
+✅ Processed: [source file]
 
 Filed:    [N] wiki pages created/updated (list)
 Produced: [N] outputs in output/ (list)
@@ -64,8 +64,8 @@ Flags:    [unknowns marked "to clarify", risks worth reading first]
 3. **`⚠ UNVERIFIED` claims from the context model never enter client-facing drafts.**
 4. **Newer fact wins**, and the wiki page records the change.
 5. **Respond in the user's language; write wiki pages and outputs in English** unless asked otherwise.
-6. **Each ingest compounds.** Re-read touched wiki pages before writing - the more the wiki knows, the sharper the next outputs get.
+6. **Each meeting compounds.** Re-read touched wiki pages before writing - the more the wiki knows, the sharper the next outputs get.
 
 # Attribution
 
-The wiki pattern is Andrej Karpathy's "LLM Wiki", included verbatim as `llm-wiki.md`. This skill is the recurring half of the pair: `/build-context-model` bootstraps the folder once; `/ingest-meeting` is what you run forever after.
+The wiki pattern is Andrej Karpathy's "LLM Wiki", included verbatim as `llm-wiki.md`. Three commands run the system: `/build-context-model` bootstraps the folder once, `/process-meeting` handles every meeting, `/ingest` files everything else.

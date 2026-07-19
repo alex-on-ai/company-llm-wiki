@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Install the company-llm-wiki skills (build-context-model + ingest-meeting)
+# Install the company-llm-wiki skills (build-context-model, process-meeting, ingest)
 # for Claude Code and Codex.
 # ./install.sh                   → installs into ~/.claude/skills and ~/.codex/skills (whichever exist)
 # ./install.sh --chatgpt         → copies the interview paste-pack (prompt + template) to the clipboard
@@ -46,8 +46,9 @@ install_skill() {
 installed=0
 for root in "${HOME}/.claude" "${HOME}/.codex"; do
   if [[ -d "${root}" ]]; then
-    install_skill "build-context-model" "${root}/skills"
-    install_skill "ingest-meeting" "${root}/skills"
+    for name in build-context-model process-meeting ingest; do
+      install_skill "${name}" "${root}/skills"
+    done
     installed=1
   fi
 done
@@ -59,7 +60,8 @@ if [[ "${installed}" == "0" ]]; then
 fi
 
 echo ""
-echo "Step one : /build-context-model  - build your company's context model (run once)"
-echo "Forever  : /ingest-meeting       - drop a transcript in raw/, get wiki pages + tasks + drafts"
+echo "Once     : /build-context-model  - build your company's context model"
+echo "Meetings : /process-meeting      - transcript in raw/ → wiki pages + tasks + spec + drafts"
+echo "Anything : /ingest               - file any material into the wiki"
 echo "ChatGPT  : ./install.sh --chatgpt          (interview pack → clipboard)"
 echo "           ./install.sh --chatgpt ingest   (ingest prompt → clipboard)"

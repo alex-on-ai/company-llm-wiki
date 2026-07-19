@@ -4,12 +4,13 @@
 
 Every AI assistant is a brilliant employee on their first day: smart, fast, and knowing nothing about your company. The fix is not a better prompt. It's context: a small LLM-maintained wiki about your company, in the pattern Andrej Karpathy described in [llm-wiki.md](llm-wiki.md) (included verbatim; the file says it "is designed to be copy pasted to your own LLM Agent").
 
-Two skills, two operations:
+Three commands:
 
 | Skill | What it does | How often |
 |---|---|---|
 | `/build-context-model` | Interviews you or harvests your website + docs into `context-model.md`, the cornerstone page | once |
-| `/ingest-meeting` | Files a transcript into linked wiki pages, then produces team tasks with owners, decisions with recommendations, a spec, client-facing drafts | every meeting |
+| `/process-meeting` | Ingests a transcript into linked wiki pages, then produces team tasks with owners, decisions with recommendations, a spec, client-facing drafts | every meeting |
+| `/ingest` | Files any other material into the wiki: articles, client emails, proposals, notes | as it arrives |
 
 The folder it maintains:
 
@@ -31,7 +32,7 @@ git clone https://github.com/alex-on-ai/company-llm-wiki.git
 cd company-llm-wiki && ./install.sh
 ```
 
-Then in any folder: `/build-context-model` once, `/ingest-meeting` after each meeting, `/refresh` weekly.
+Then in any folder: `/build-context-model` once, `/process-meeting` after each meeting, `/ingest` for anything else, `/refresh` weekly.
 
 Prefer a plain chat (ChatGPT, Claude, Gemini)? The same flows live in `prompts/` as paste-able prompts. `./install.sh --chatgpt` copies the interview pack to your clipboard, `./install.sh --chatgpt ingest` the ingest prompt.
 

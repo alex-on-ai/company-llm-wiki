@@ -73,7 +73,7 @@ The agent maintains everything except `raw/`; the human curates sources and revi
 
 ## Layers
 
-- `context-model.md` - the cornerstone: who we are. Read before any task. Update only via the refresh ritual, never silently.
+- `context-model.md` - the cornerstone: who we are, distilled from the wiki into one portable file (uploadable to any AI surface). Read before any task. Update only via the refresh ritual, never silently; detail belongs in wiki pages, linked with `[[Page Name]]`.
 - `raw/` - immutable sources. Read, never modify. New material always lands here first.
 - `wiki/` - pages the agent creates and maintains: `clients/`, `meetings/`, `projects/`, `cases/`, `topics/`. Cross-link with `[[Page Name]]`.
 - `output/` - work products (task lists, specs, letters). Drafts only; a human sends. Frozen once shipped.
@@ -153,7 +153,9 @@ Unverified claims stay in the document but keep the `⚠ UNVERIFIED` marker. AI 
 
 ## Synthesis
 
-Generate `context-model.md` from `templates/context-model-template.md` - 10 sections + changelog. Concreteness rule: if a section reads like it could describe any company in the industry, it is not done; push for the specific detail.
+Generate `context-model.md` from `templates/context-model-template.md` - 10 sections + changelog. The relationship to the wiki: **the wiki is the source of truth, the context model is the compiled artifact** - the wiki's synthesis page, kept short and portable because it gets uploaded to ChatGPT Projects, pasted into system prompts, and read first by every agent. Detail belongs in wiki pages; the model links to them with `[[Page Name]]` instead of absorbing them. `/refresh` recompiles it as the wiki learns.
+
+Concreteness rule: if a section reads like it could describe any company in the industry, it is not done; push for the specific detail.
 
 Then close the books: update `index.md` (one line per page, context-model.md first), and append to `log.md`: `## [YYYY-MM-DD] build | context model built from <sources>, N wiki pages filed`.
 

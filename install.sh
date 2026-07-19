@@ -34,6 +34,7 @@ fi
 install_skill() {
   local name="$1" dest_root="$2"
   local dest="${dest_root}/${name}"
+  rm -rf -- "${dest}"
   mkdir -p "${dest}"
   cp -R "${SRC_DIR}/skills/${name}/." "${dest}/"
   echo "✅ Installed: ${dest}"

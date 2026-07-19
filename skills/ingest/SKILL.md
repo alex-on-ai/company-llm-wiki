@@ -5,7 +5,7 @@ description: File any raw material into the company's LLM wiki - articles, clien
 
 # Ingest - file any material into the wiki
 
-The librarian operation from `llm-wiki.md` (Andrej Karpathy, included in this folder - read it once): you drop material in, the wiki absorbs it. Every ingest makes the next answer and the next `/process-meeting` sharper. This command files knowledge; it does not produce work products unless you ask.
+The librarian operation from root-level `llm-wiki.md` (Andrej Karpathy, written by `/build-context-model` - read it once): you drop material in, the wiki absorbs it. Every ingest makes the next answer and the next `/process-meeting` sharper. This command files knowledge; it does not produce work products unless you ask.
 
 ## Step 0 - preconditions
 
@@ -13,12 +13,13 @@ The librarian operation from `llm-wiki.md` (Andrej Karpathy, included in this fo
 2. Find root-level `context-model.md`. Proceed when it contains `[GAP]` or `⚠ UNVERIFIED`; gaps are not a precondition failure.
 3. Legacy repair: if `context-model.md` is missing but `output/context-model-draft.md` exists from an older skill version, promote that file to root-level `context-model.md`, keep its gap markers, record the repair in `log.md`, and continue. Do not retain a second model file.
 4. If neither a model nor a legacy draft exists, stop and run `/build-context-model` in this same wiki root. That build creates `context-model.md` immediately.
-5. Ensure the folder shape exists - create missing dirs silently:
+5. Find root-level `llm-wiki.md` and read it once. If it is missing, stop and run `/build-context-model` in this same wiki root to repair the scaffold. This downstream skill does not carry a second copy.
+6. Ensure the folder shape exists - create missing dirs silently:
 
 ```
 ./
 ├── AGENTS.md + CLAUDE.md ← the schema (written by /build-context-model)
-├── llm-wiki.md           ← the pattern doc (copy from the skill directory if missing; fallback: download https://raw.githubusercontent.com/alex-on-ai/company-llm-wiki/main/llm-wiki.md)
+├── llm-wiki.md           ← the pattern doc (written once by /build-context-model)
 ├── context-model.md      ← who we are (built by /build-context-model)
 ├── index.md              ← one line per wiki page
 ├── log.md                ← append-only op record
@@ -27,7 +28,7 @@ The librarian operation from `llm-wiki.md` (Andrej Karpathy, included in this fo
 └── output/               ← work products (written on request)
 ```
 
-6. Locate the source: the file the user named, else the newest unprocessed file in `raw/`. If the user pasted text or a URL, save the content first as `raw/YYYY-MM-DD - [short title].md` - raw material always lands in `raw/` before filing.
+7. Locate the source: the file the user named, else the newest unprocessed file in `raw/`. If the user pasted text or a URL, save the content first as `raw/YYYY-MM-DD - [short title].md` - raw material always lands in `raw/` before filing.
 
 ## Step 1 - read context first
 
@@ -69,4 +70,4 @@ If the user asked for a specific output (a summary, a reply draft, a comparison)
 
 # Attribution
 
-The wiki pattern is Andrej Karpathy's "LLM Wiki", included verbatim as `llm-wiki.md`. Three commands run the system: `/build-context-model` bootstraps the folder once, `/process-meeting` handles every meeting, `/ingest` files everything else.
+The root wiki pattern is Andrej Karpathy's "LLM Wiki", written once by `/build-context-model`. Three commands run the system: `/build-context-model` bootstraps the folder once, `/process-meeting` handles every meeting, `/ingest` files everything else.

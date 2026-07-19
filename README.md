@@ -32,9 +32,9 @@ The build writes the schema into the folder itself (`AGENTS.md` for Codex, `CLAU
 
 **Easiest - tell your agent.** Paste into Claude Code or Codex:
 
-> Install the skills from https://github.com/alex-on-ai/company-llm-wiki into this project.
+> Install the skills from https://github.com/alex-on-ai/company-llm-wiki into this project. Read that repo's README section "Install notes for agents" first and follow it exactly.
 
-The agent follows the install notes below and confirms what it installed.
+The agent installs locally, confirms what it installed, and flows straight into the build.
 
 **Terminal.** The skills live with the company folder they operate on, so install from inside it:
 

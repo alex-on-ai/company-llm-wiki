@@ -1,5 +1,7 @@
 # Company LLM Wiki
 
+[![skills.sh](https://skills.sh/b/alex-on-ai/company-llm-wiki)](https://skills.sh/alex-on-ai/company-llm-wiki)
+
 **Give AI your company's context once, then turn every meeting into filed knowledge and finished drafts.**
 
 Every AI assistant is a brilliant employee on their first day: smart, fast, and knowing nothing about your company. The fix is not a better prompt. It's context: a small LLM-maintained wiki about your company, in the pattern Andrej Karpathy described in [llm-wiki.md](llm-wiki.md) (included verbatim; the file says it "is designed to be copy pasted to your own LLM Agent").
@@ -28,40 +30,63 @@ The working folder is the wiki root. The build never creates a second company-na
 
 The build writes the schema and a usable `context-model.md` into the working folder itself (`AGENTS.md` for Codex, `CLAUDE.md` for Claude Code, same content). That makes the wiki self-describing: any agent opened in the folder knows how to operate it, with or without these skills installed. Unknown facts stay marked `[GAP]`; they do not block `/process-meeting` or `/ingest`.
 
-## Install
+## Quickstart (30-second setup)
 
-**Easiest - tell your agent.** Paste into Claude Code or Codex:
-
-> Install the skills from https://github.com/alex-on-ai/company-llm-wiki into this project, then build my company's context model. Read that repo's README section "Install notes for agents" first and follow it exactly.
-
-The agent installs locally and flows straight into the build - the build's own step 0 asks you to confirm the exact wiki root, company name, and sources before anything is created.
-
-**Terminal.** The skills live with the company folder they operate on, so install from inside it:
+1. From the folder where your company wiki should live, run the [skills.sh](https://skills.sh) installer:
 
 ```bash
-git clone https://github.com/alex-on-ai/company-llm-wiki.git
-mkdir your-company && cd your-company
-../company-llm-wiki/install.sh
+npx skills@latest add alex-on-ai/company-llm-wiki
 ```
 
-Run the installer from the folder that should contain `context-model.md`, `raw/`, `wiki/`, and `output/`. `/build-context-model` populates that exact folder; it does not create another `your-company/` directory inside it.
+2. Pick the skills (take all three) and the coding agents to install them on. Skills land project-local; agents load them on the next session.
 
-Machine-wide instead (every project, Claude Code + Codex): `./install.sh --global` writes to `~/.claude/skills/` and `~/.agents/skills/`.
+3. Restart your agent in that folder and run `/build-context-model`. It scaffolds the wiki, writes a usable `context-model.md` immediately, and asks only for what it cannot find on your website, LinkedIn, or documents.
 
-Then: `/build-context-model` once, `/process-meeting` after each meeting, `/ingest` for anything else, `/refresh` weekly.
+4. From then on: `/process-meeting` after every meeting, `/ingest` for anything else, `/refresh` weekly.
 
-Prefer a plain chat (ChatGPT, Claude, Gemini)? The same flows live in `prompts/` as paste-able prompts. `./install.sh --chatgpt` copies the interview pack to your clipboard, `./install.sh --chatgpt ingest` the ingest prompt.
+Or skip the terminal entirely and paste this into Claude Code or Codex:
 
-### Install notes for agents
+> Install the skills from https://github.com/alex-on-ai/company-llm-wiki into this project, then build my company's context model. Follow the repo README's "Install notes for agents" exactly.
 
-If a user asks you to install this repo's skills, follow these steps exactly. Do NOT substitute a skills manager CLI (`npx skills` or similar), and never install globally (`-g`) - these skills are folder-scoped and belong to the project.
+## Install as a Claude Code plugin
 
-1. Clone `https://github.com/alex-on-ai/company-llm-wiki.git` to a temporary location (simplest: run its `install.sh` from the user's project folder, which performs steps 2-3; the manual steps follow).
-2. Destination is the current project: BOTH `./.claude/skills/` and `./.agents/skills/` (create the directories if missing; Claude Code reads the first, Codex scans the second from the working directory to the repository root). Use `~/.claude/skills/` plus `~/.agents/skills/` only if the user explicitly asked for a global install. Do not use project-local `.codex/skills`; it is not Codex's documented repository skill location.
-3. Copy ALL THREE folders under `skills/` (`build-context-model`, `process-meeting`, `ingest`) into each destination - a partial install is a failed install. Into every installed skill folder also copy the repo's `llm-wiki.md`; into `build-context-model/` additionally copy `templates/` and `prompts/interview-prompt.md`.
-4. Remove the temporary clone and verify: each destination contains the three skill folders, each with a `SKILL.md`.
-5. Treat "install" as "install and set up": the user's goal is a working company wiki, not files on disk. After verifying the install, immediately open the installed `build-context-model/SKILL.md`, read it fully, and execute it as your instructions in this same session (freshly installed skills register only in new sessions - that is why you execute the file directly). Do NOT end your turn after installing: your turn ends either on the build's step 0 questions to the user (exact wiki root, company name, sources - the consent gate) or after the build completes. The build must write root-level `context-model.md` immediately; optional gap questions never gate completion. Mention that from the next session onward the commands are `/build-context-model` (once), `/process-meeting` (every meeting), `/ingest` (anything else).
-6. If any skill instruction conflicts with your environment, adapt minimally, tell the user what you changed and why, and record it in `./skill-feedback.md` in the project - that file is how improvements travel upstream (the user can open an issue or PR on this repo from it).
+Prefer a managed bundle you don't maintain by hand? These skills also ship as a native [Claude Code plugin](https://code.claude.com/docs/en/plugins) - a read-only set that updates when a new version ships, instead of editable copies in your repo.
+
+Inside Claude Code:
+
+```
+/plugin marketplace add alex-on-ai/company-llm-wiki
+/plugin install company-llm-wiki@alex-on-ai
+```
+
+Or from your shell:
+
+```bash
+claude plugin marketplace add alex-on-ai/company-llm-wiki
+claude plugin install company-llm-wiki@alex-on-ai
+```
+
+Then run `/build-context-model` once per company folder, exactly as in the quickstart.
+
+## Codex
+
+The quickstart covers Codex: the skills.sh installer writes skills into `.agents/skills/`, which Codex reads natively (project and `~/.agents/skills` for user level), and every skill ships Codex metadata in `agents/openai.yaml`. Manual alternative from a clone: run `./install.sh` from your project folder (installs into `./.claude/skills` and `./.agents/skills`; `--global` for machine-wide).
+
+## No agent at all (ChatGPT or any chat)
+
+The same flows live in [prompts/](prompts/) as paste-able prompts. From a clone: `./install.sh --chatgpt` copies the interview pack (prompt + template) to your clipboard; `./install.sh --chatgpt ingest` copies the ingest prompt.
+
+## Install notes for agents
+
+If a user asks you to install this repo's skills:
+
+1. Preferred: run `npx skills@latest add alex-on-ai/company-llm-wiki --all` from the user's project folder. Project-level, never `-g`: these skills are folder-scoped. Verify all THREE skills installed (`build-context-model`, `process-meeting`, `ingest`) - a partial install is a failed install.
+2. Manual fallback: clone the repo to a temporary location, copy the three folders under `skills/` into BOTH `./.claude/skills/` and `./.agents/skills/` of the project (create the directories; the folders are self-contained), then remove the clone.
+3. Do not stop at installing - the user's goal is a working company wiki, not files on disk. Freshly installed skills register only in new sessions, so open the installed `build-context-model/SKILL.md`, read it fully, and execute it as your instructions now. Your turn ends either on the build's step 0 questions (exact wiki root, company name, sources - the consent gate) or after the build completes. The build writes root-level `context-model.md` immediately; gap questions never gate completion.
+4. If any skill instruction conflicts with your environment, adapt minimally, tell the user what you changed and why, and record it in `./skill-feedback.md` in the project - that file is how improvements travel upstream (issue or PR on this repo).
+5. Mention the ongoing commands: `/process-meeting` after every meeting, `/ingest` for any other material, `/refresh` weekly.
+
+`/build-context-model` populates the exact folder the user confirms; it does not create another `your-company/` directory inside it.
 
 ## Deliberately strict
 
@@ -73,7 +98,7 @@ If a user asks you to install this repo's skills, follow these steps exactly. Do
 
 ## Where this comes from
 
-The wiki pattern is [Andrej Karpathy's "LLM Wiki"](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f), included verbatim as `llm-wiki.md`. Skill structure inspired by [Volodymyr Kuts](https://github.com/boxa007)'s `company-context-model` ([profigent-lesson_1](https://github.com/boxa007/profigent-lesson_1), MIT), generalized from a LinkedIn-pipeline foundation into a company-wide AI operating layer.
+The wiki pattern is [Andrej Karpathy's "LLM Wiki"](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f), included verbatim as `llm-wiki.md`. Skill structure inspired by [Volodymyr Kuts](https://github.com/boxa007)'s `company-context-model` ([profigent-lesson_1](https://github.com/boxa007/profigent-lesson_1), MIT), generalized from a LinkedIn-pipeline foundation into a company-wide AI operating layer. Repo packaging (skills.sh + Claude Code plugin + Codex metadata) follows the pattern of [mattpocock/skills](https://github.com/mattpocock/skills).
 
 Built by [Oleksandr Pavlov](https://www.linkedin.com/in/alex-on-ai/), CEO [HighCraft.io](https://highcraft.io).
 

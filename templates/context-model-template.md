@@ -6,11 +6,11 @@ language: en
 version: 1.0
 ---
 
-# Company Context Model — [COMPANY_NAME]
+# Company Context Model - [COMPANY_NAME]
 
 > The single document that makes AI assistants specific instead of generic.
 > Upload it to ChatGPT Projects, reference it from Claude, inject it into agent system prompts.
-> Refresh weekly — stale context produces confident nonsense.
+> Refresh weekly - stale context produces confident nonsense.
 
 ---
 
@@ -20,13 +20,13 @@ version: 1.0
 [Name]
 
 **Category we compete in:**
-[Specific category — "B2B freight forwarding", "AI engineering for healthcare" — not "IT company"]
+[Specific category - "B2B freight forwarding", "AI engineering for healthcare" - not "IT company"]
 
 **One sentence about us:**
 [What we do, in plain words]
 
 **The enemy (what we're against):**
-[The bad practice / noisy trend in our industry we position against. One sentence — this is a message anchor.]
+[The bad practice / noisy trend in our industry we position against. One sentence - this is a message anchor.]
 
 **Mission (optional):**
 [The larger thing we're building toward]
@@ -36,9 +36,9 @@ version: 1.0
 ## 2. Offer
 
 **Services / products (top-3):**
-- [Service 1] — [one-line description]
-- [Service 2] — [...]
-- [Service 3] — [...]
+- [Service 1] - [one-line description]
+- [Service 2] - [...]
+- [Service 3] - [...]
 
 **Price points:**
 - [Service A]: $X–$Y
@@ -68,25 +68,25 @@ version: 1.0
 
 ### Top-3 pains
 
-1. [Concrete pain, with a number where possible — "proposals take 2 days; deals die waiting"]
+1. [Concrete pain, with a number where possible - "proposals take 2 days; deals die waiting"]
 2. [...]
 3. [...]
 
 ### Buying triggers
 
-- [Signal 1 — e.g. hiring for a role this replaces]
-- [Signal 2 — e.g. new exec joined]
+- [Signal 1 - e.g. hiring for a role this replaces]
+- [Signal 2 - e.g. new exec joined]
 - [Signal 3]
 
 ### Disqualifiers (who we say no to)
 
-- [Anti-ICP 1 — e.g. B2C, no budget, pure staffing requests]
+- [Anti-ICP 1 - e.g. B2C, no budget, pure staffing requests]
 - [Anti-ICP 2]
 
 ### Compared against
 
-- [Competitor / type 1] — [why we get compared]
-- [Competitor / type 2] — [...]
+- [Competitor / type 1] - [why we get compared]
+- [Competitor / type 2] - [...]
 
 ---
 
@@ -113,7 +113,7 @@ version: 1.0
 
 ### Top cases
 
-**Case 1: [Client or anonymized descriptor]** — [status marker]
+**Case 1: [Client or anonymized descriptor]** - [status marker]
 - Segment: [industry / size]
 - Before: [metric]
 - After: [metric]
@@ -125,12 +125,12 @@ version: 1.0
 
 ### Metrics we can honestly quote
 
-- [Metric 1] — [status marker]
-- [Metric 2] — [status marker]
+- [Metric 1] - [status marker]
+- [Metric 2] - [status marker]
 
 ### Testimonials
 
-> "[Real quote]" — [Name · Role · Company] — [status marker]
+> "[Real quote]" - [Name · Role · Company] - [status marker]
 
 ---
 
@@ -176,13 +176,13 @@ leverage · synergy · passionate · thrilled · humbled · delve · transformat
 - Task tracker: [tool]
 - CRM / deals: [tool]
 - Docs / knowledge: [tool]
-- Messengers: [internal — tool; client-facing — tool]
+- Messengers: [internal - tool; client-facing - tool]
 
 **Operating rhythm:**
-- [Meeting cadence — e.g. Mon planning 30 min, daily standup 15 min]
+- [Meeting cadence - e.g. Mon planning 30 min, daily standup 15 min]
 
 **Service norms:**
-- [Response-time promises — e.g. client inquiries answered within 2 business hours]
+- [Response-time promises - e.g. client inquiries answered within 2 business hours]
 - [Quote/proposal turnaround: N hours]
 
 **Decision rules:**
@@ -206,10 +206,10 @@ leverage · synergy · passionate · thrilled · humbled · delve · transformat
 ## 10. Using this model
 
 **Load it into:**
-- **ChatGPT** — create a Project → upload this file → every chat in the project knows the company
-- **Claude Code / Claude Projects** — add to project knowledge, or reference from `CLAUDE.md`
-- **n8n / API agents** — paste into the system prompt as a `CONTEXT:` block
-- **Any chat** — paste the file above your question:
+- **ChatGPT** - create a Project → upload this file → every chat in the project knows the company
+- **Claude Code / Claude Projects** - add to project knowledge, or reference from `CLAUDE.md`
+- **n8n / API agents** - paste into the system prompt as a `CONTEXT:` block
+- **Any chat** - paste the file above your question:
 
 ```
 CONTEXT:
@@ -228,4 +228,4 @@ TASK:
 
 ## Changelog
 
-- **[YYYY-MM-DD]** — created via `/context-model` skill
+- **[YYYY-MM-DD]** - created via `/context-model` skill

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Install the company-llm-wiki skills (build-context-model + ingest-meeting)
-# for Claude Code and Codex CLI.
+# for Claude Code and Codex.
 # ./install.sh                   → installs into ~/.claude/skills and ~/.codex/skills (whichever exist)
 # ./install.sh --chatgpt         → copies the interview paste-pack (prompt + template) to the clipboard
 # ./install.sh --chatgpt ingest  → copies the ingest prompt to the clipboard
@@ -22,7 +22,7 @@ $(cat "${SRC_DIR}/templates/context-model-template.md")"
   fi
   if command -v pbcopy >/dev/null 2>&1; then
     printf '%s' "${PACK}" | pbcopy
-    echo "✅ ${LABEL} copied to clipboard — paste into any AI chat."
+    echo "✅ ${LABEL} copied to clipboard - paste into any AI chat."
   else
     printf '%s\n' "${PACK}"
   fi
@@ -53,13 +53,13 @@ for root in "${HOME}/.claude" "${HOME}/.codex"; do
 done
 
 if [[ "${installed}" == "0" ]]; then
-  echo "No ~/.claude or ~/.codex found. Install Claude Code or Codex CLI first,"
+  echo "No ~/.claude or ~/.codex found. Install Claude Code or Codex first,"
   echo "or use the no-install path: ./install.sh --chatgpt (works with any AI chat)."
   exit 1
 fi
 
 echo ""
-echo "Step one : /build-context-model  — build your company's context model (run once)"
-echo "Forever  : /ingest-meeting       — drop a transcript in raw/, get wiki pages + tasks + drafts"
+echo "Step one : /build-context-model  - build your company's context model (run once)"
+echo "Forever  : /ingest-meeting       - drop a transcript in raw/, get wiki pages + tasks + drafts"
 echo "ChatGPT  : ./install.sh --chatgpt          (interview pack → clipboard)"
 echo "           ./install.sh --chatgpt ingest   (ingest prompt → clipboard)"

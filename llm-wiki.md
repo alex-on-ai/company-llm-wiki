@@ -1,4 +1,4 @@
-> The original "LLM Wiki" pattern document by Andrej Karpathy, included verbatim — as it says of itself, it "is designed to be copy pasted to your own LLM Agent". Source: https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
+> The original "LLM Wiki" pattern document by Andrej Karpathy, included verbatim - as it says of itself, it "is designed to be copy pasted to your own LLM Agent". Source: https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
 > This repository is one instantiation of the pattern, shaped for a company: the context model is the first wiki page, `raw/` is the source layer, the ingest prompt grows the rest.
 
 # LLM Wiki

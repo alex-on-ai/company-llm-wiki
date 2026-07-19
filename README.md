@@ -29,11 +29,11 @@ Two things are deliberately strict:
 ## Quick start — Claude Code
 
 ```bash
-git clone https://github.com/alex-on-ai/context-model.git
-cd context-model && ./install.sh
+git clone https://github.com/alex-on-ai/build-context-model.git
+cd build-context-model && ./install.sh
 ```
 
-Then in any project: `/context-model` (or just say "build my context model"). Point it at your website and docs — harvest mode drafts the model from what already exists.
+Then in any project: `/build-context-model` (or just say "build my context model"). Point it at your website and docs — harvest mode drafts the model from what already exists.
 
 ## Where this comes from
 

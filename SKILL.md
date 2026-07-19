@@ -1,6 +1,6 @@
 ---
-name: context-model
-description: Build and maintain a Company Context Model — the single document that lets any AI assistant (ChatGPT, Claude, n8n agents) produce specific, on-brand, delegation-ready output instead of generic slop. Two build modes — /build harvest (draft from existing materials: website, docs, repos; ask only the gaps) and /build interview (guided interview in batches). /refresh runs the weekly update ritual. Triggers — "build context model", "context model", "/context-model", "/build", "/refresh", "set up company context", "my AI answers are generic".
+name: build-context-model
+description: Build and maintain a Company Context Model — the single document that lets any AI assistant (ChatGPT, Claude, n8n agents) produce specific, on-brand, delegation-ready output instead of generic slop. Two build modes — /build harvest (draft from existing materials: website, docs, repos; ask only the gaps) and /build interview (guided interview in batches). /refresh runs the weekly update ritual. Triggers — "build context model", "build my context model", "/build-context-model", "/build", "/refresh", "set up company context", "my AI answers are generic".
 ---
 
 # Context Model — the company's operating context for AI

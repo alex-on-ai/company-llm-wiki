@@ -6,13 +6,14 @@
 
 Every AI assistant is a brilliant employee on their first day: smart, fast, and knowing nothing about your company. The fix is not a better prompt. It's context: a small LLM-maintained wiki about your company, in the pattern Andrej Karpathy described in [llm-wiki.md](llm-wiki.md) (included verbatim; the file says it "is designed to be copy pasted to your own LLM Agent").
 
-Three commands:
+Four commands:
 
 | Skill | What it does | How often |
 |---|---|---|
 | `/build-context-model` | Interviews you or harvests your website, LinkedIn and docs into the wiki (cases, topics, raw extracts), then distills `context-model.md` - the portable cornerstone every AI surface consumes | once |
 | `/process-meeting` | Ingests a transcript into linked wiki pages, then produces team tasks with owners, your action items, decisions with recommendations, a spec, client-facing drafts | every meeting |
 | `/ingest` | Files any other material into the wiki: articles, client emails, proposals, notes | as it arrives |
+| `/file-tasks` | Creates the meeting's team tasks in your connected task tracker (Linear, Jira, Asana, ...) - you confirm the exact batch first, duplicates are skipped, links come back | after `/process-meeting`, when a tracker is connected |
 
 The working folder is the wiki root. The build never creates a second company-named folder inside it:
 
@@ -38,11 +39,11 @@ The build writes the schema and a usable `context-model.md` into the working fol
 npx skills@latest add alex-on-ai/company-llm-wiki --skill "*" --agent codex claude-code -y
 ```
 
-2. This installs all three skills project-locally for Codex and Claude Code only. Agents load them on the next session.
+2. This installs all four skills project-locally for Codex and Claude Code only. Agents load them on the next session.
 
 3. Restart your agent in that folder and run `/build-context-model`. It scaffolds the wiki, writes a usable `context-model.md` immediately, and asks only for what it cannot find on your website, LinkedIn, or documents.
 
-4. From then on: `/process-meeting` after every meeting, `/ingest` for anything else, `/refresh` weekly.
+4. From then on: `/process-meeting` after every meeting, `/file-tasks` to put its team tasks on your board, `/ingest` for anything else, `/refresh` weekly.
 
 Or skip the terminal entirely and paste this into Claude Code or Codex:
 
@@ -95,10 +96,10 @@ npx skills@latest add alex-on-ai/company-llm-wiki --skill "*" --agent codex clau
 ```
 
 1. That command is the whole job: no cloning, no copying files, no cleanup afterwards. Never pass `-g` (these skills are folder-scoped) or `--all` (`--all` expands to every skill and every supported agent). The scoped command installs only to `.agents/skills/` plus the Claude Code symlinks.
-2. Verify all THREE skills installed: `build-context-model`, `process-meeting`, `ingest`. A partial install is a failed install; re-run the command rather than repairing by hand.
+2. Verify all FOUR skills installed: `build-context-model`, `process-meeting`, `ingest`, `file-tasks`. A partial install is a failed install; re-run the command rather than repairing by hand.
 3. Do not stop at installing - the user's goal is a working company wiki, not files on disk. Freshly installed skills register only in new sessions, so open the installed `build-context-model/SKILL.md`, read it fully, and execute it as your instructions now. Your turn ends either on the build's step 0 questions (exact wiki root, company name, sources - the consent gate) or after the build completes. The build writes root-level `context-model.md` immediately; gap questions never gate completion.
 4. If any skill instruction conflicts with your environment, adapt minimally, tell the user what you changed and why, and record it in `./skill-feedback.md` in the project - that file is how improvements travel upstream (issue or PR on this repo).
-5. Mention the ongoing commands: `/process-meeting` after every meeting, `/ingest` for any other material, `/refresh` weekly.
+5. Mention the ongoing commands: `/process-meeting` after every meeting, `/file-tasks` to create its team tasks in a connected tracker, `/ingest` for any other material, `/refresh` weekly.
 
 The build skill bundles the canonical `llm-wiki.md` bootstrap asset. It copies that file once into the wiki root. The downstream skills read the root artifact and do not carry duplicate copies.
 

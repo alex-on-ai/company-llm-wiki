@@ -57,6 +57,10 @@ Default package, written as files into `output/` (skip items the meeting doesn't
 
 Then close the books: update `index.md` for every page touched, and append to `log.md`: `## [YYYY-MM-DD] process | <meeting title>`.
 
+## Step 4 - offer to file the tasks
+
+If a task-tracker tool is connected (Linear, Jira, Asana, Azure DevOps or similar, via MCP or connectors), offer to file the team tasks with `/file-tasks` - offer only, create nothing from this skill. If no tracker tool is available, skip this silently; never simulate one.
+
 ## Closing message
 
 ```
@@ -65,6 +69,7 @@ Then close the books: update `index.md` for every page touched, and append to `l
 Filed:    [N] wiki pages created/updated (list)
 Produced: [N] outputs in output/ (list)
 Flags:    [unknowns marked "to clarify", risks worth reading first]
+Next:     [only when a tracker tool is connected] say "file tasks" - /file-tasks creates the team tasks in [tracker]
 ```
 
 # Hard rules
@@ -80,4 +85,4 @@ Flags:    [unknowns marked "to clarify", risks worth reading first]
 
 # Attribution
 
-The root wiki pattern is Andrej Karpathy's "LLM Wiki", written once by `/build-context-model`. Three commands run the system: `/build-context-model` bootstraps the folder once, `/process-meeting` handles every meeting, `/ingest` files everything else.
+The root wiki pattern is Andrej Karpathy's "LLM Wiki", written once by `/build-context-model`. Four commands run the system: `/build-context-model` bootstraps the folder once, `/process-meeting` handles every meeting, `/ingest` files everything else, `/file-tasks` creates the team tasks in your connected tracker.

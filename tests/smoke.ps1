@@ -31,12 +31,13 @@ function Assert-InstallShape {
     )
 
     foreach ($Runtime in @(".claude", ".agents")) {
-        foreach ($Skill in @("build-context-model", "process-meeting", "ingest")) {
+        foreach ($Skill in @("build-context-model", "process-meeting", "ingest", "file-tasks")) {
             Assert-True (Test-Path -LiteralPath (Join-Path $Root "$Runtime/skills/$Skill/SKILL.md")) "Missing $Runtime skill: $Skill"
         }
         Assert-True (Test-Path -LiteralPath (Join-Path $Root "$Runtime/skills/build-context-model/llm-wiki.md")) "Missing build bootstrap asset"
         Assert-True (-not (Test-Path -LiteralPath (Join-Path $Root "$Runtime/skills/process-meeting/llm-wiki.md"))) "process-meeting carries a duplicate llm-wiki.md"
         Assert-True (-not (Test-Path -LiteralPath (Join-Path $Root "$Runtime/skills/ingest/llm-wiki.md"))) "ingest carries a duplicate llm-wiki.md"
+        Assert-True (-not (Test-Path -LiteralPath (Join-Path $Root "$Runtime/skills/file-tasks/llm-wiki.md"))) "file-tasks carries a duplicate llm-wiki.md"
     }
     Assert-True (-not (Test-Path -LiteralPath (Join-Path $Root "agent"))) "Installer created an unrequested agent/ directory"
 }

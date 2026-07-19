@@ -70,4 +70,4 @@ If the user asked for a specific output (a summary, a reply draft, a comparison)
 
 # Attribution
 
-The root wiki pattern is Andrej Karpathy's "LLM Wiki", written once by `/build-context-model`. Three commands run the system: `/build-context-model` bootstraps the folder once, `/process-meeting` handles every meeting, `/ingest` files everything else.
+The root wiki pattern is Andrej Karpathy's "LLM Wiki", written once by `/build-context-model`. Four commands run the system: `/build-context-model` bootstraps the folder once, `/process-meeting` handles every meeting, `/ingest` files everything else, `/file-tasks` creates the team tasks in your connected tracker.

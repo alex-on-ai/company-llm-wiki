@@ -1,6 +1,6 @@
 {
   "name": "company-llm-wiki",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A small LLM-maintained wiki for your company: build the context model once, then turn every meeting into filed knowledge and finished drafts. Karpathy's llm-wiki pattern, company-shaped.",
   "author": {
     "name": "Oleksandr Pavlov",
@@ -20,6 +20,7 @@
   "skills": [
     "./skills/build-context-model",
     "./skills/process-meeting",
-    "./skills/ingest"
+    "./skills/ingest",
+    "./skills/file-tasks"
   ]
 }

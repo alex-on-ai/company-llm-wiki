@@ -185,6 +185,7 @@ USE IT NOW:
 NEXT:
 → /process-meeting - transcript in raw/ → wiki pages + tasks + spec + drafts
 → /ingest - file any other material into the wiki
+→ /file-tasks - create the team tasks in your connected tracker (Linear, Jira, ...)
 → /refresh weekly (10 min) - new wins, changed facts
 ```
 

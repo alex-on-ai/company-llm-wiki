@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Install the company-llm-wiki skills (build-context-model, process-meeting, ingest)
-# for Claude Code and Codex.
+# Install the company-llm-wiki skills (build-context-model, process-meeting,
+# ingest, file-tasks) for Claude Code and Codex.
 # Run it FROM YOUR PROJECT FOLDER (the folder where the company wiki will live):
 # ../path/to/install.sh          → installs into ./.claude/skills and ./.agents/skills of the current folder (default)
 # ../path/to/install.sh --global → installs machine-wide: ~/.claude/skills and ~/.agents/skills
@@ -42,7 +42,7 @@ install_skill() {
 
 if [[ "${1:-}" == "--global" ]]; then
   for dest in "${HOME}/.claude/skills" "${HOME}/.agents/skills"; do
-    for name in build-context-model process-meeting ingest; do
+    for name in build-context-model process-meeting ingest file-tasks; do
       install_skill "${name}" "${dest}"
     done
   done
@@ -55,7 +55,7 @@ else
     exit 1
   fi
   for dest in "${PWD}/.claude/skills" "${PWD}/.agents/skills"; do
-    for name in build-context-model process-meeting ingest; do
+    for name in build-context-model process-meeting ingest file-tasks; do
       install_skill "${name}" "${dest}"
     done
   done
@@ -68,6 +68,7 @@ echo ""
 echo "Once     : /build-context-model  - build your company's context model"
 echo "Meetings : /process-meeting      - transcript in raw/ → wiki pages + tasks + spec + drafts"
 echo "Anything : /ingest               - file any material into the wiki"
+echo "Tracker  : /file-tasks           - create the team tasks in your connected tracker"
 echo "ChatGPT  : ./install.sh --chatgpt          (interview pack → clipboard)"
 echo "           ./install.sh --chatgpt ingest   (ingest prompt → clipboard)"
 echo ""

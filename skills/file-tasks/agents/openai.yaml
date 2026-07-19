@@ -1,0 +1,3 @@
+interface:
+  display_name: "File Tasks"
+  short_description: "Create the meeting's team tasks in your connected task tracker"

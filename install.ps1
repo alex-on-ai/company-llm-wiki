@@ -10,7 +10,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $SourceRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
-$SkillNames = @("build-context-model", "process-meeting", "ingest")
+$SkillNames = @("build-context-model", "process-meeting", "ingest", "file-tasks")
 
 function Copy-Skill {
     param(
@@ -107,5 +107,6 @@ Write-Host ""
 Write-Host "Once     : /build-context-model  - build your company's context model"
 Write-Host "Meetings : /process-meeting      - transcript to wiki pages, tasks, spec, and drafts"
 Write-Host "Anything : /ingest               - file any material into the wiki"
+Write-Host "Tracker  : /file-tasks           - create the team tasks in your connected tracker"
 Write-Host ""
 Write-Host "Restart your agent session, then start with /build-context-model."

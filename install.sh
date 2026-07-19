@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Install the company-llm-wiki skills (build-context-model, process-meeting, ingest)
 # for Claude Code and Codex.
-# ./install.sh                   → installs into ~/.claude/skills and ~/.codex/skills (whichever exist)
+# ./install.sh                   → installs globally: ~/.claude/skills and ~/.codex/skills (whichever exist)
+# ./install.sh --local           → installs into ./.claude/skills of the current project only
 # ./install.sh --chatgpt         → copies the interview paste-pack (prompt + template) to the clipboard
 # ./install.sh --chatgpt ingest  → copies the ingest prompt to the clipboard
 set -euo pipefail
@@ -44,18 +45,27 @@ install_skill() {
 }
 
 installed=0
-for root in "${HOME}/.claude" "${HOME}/.codex"; do
-  if [[ -d "${root}" ]]; then
-    for name in build-context-model process-meeting ingest; do
-      install_skill "${name}" "${root}/skills"
-    done
-    installed=1
-  fi
-done
+if [[ "${1:-}" == "--local" ]]; then
+  for name in build-context-model process-meeting ingest; do
+    install_skill "${name}" "${PWD}/.claude/skills"
+  done
+  installed=1
+  echo "Installed into this project only (./.claude/skills). Run the agent from this folder."
+else
+  for root in "${HOME}/.claude" "${HOME}/.codex"; do
+    if [[ -d "${root}" ]]; then
+      for name in build-context-model process-meeting ingest; do
+        install_skill "${name}" "${root}/skills"
+      done
+      installed=1
+    fi
+  done
+fi
 
 if [[ "${installed}" == "0" ]]; then
   echo "No ~/.claude or ~/.codex found. Install Claude Code or Codex first,"
-  echo "or use the no-install path: ./install.sh --chatgpt (works with any AI chat)."
+  echo "use ./install.sh --local from your project folder,"
+  echo "or the no-install path: ./install.sh --chatgpt (works with any AI chat)."
   exit 1
 fi
 

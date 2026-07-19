@@ -30,16 +30,33 @@ The build writes the schema into the folder itself (`AGENTS.md` for Codex, `CLAU
 
 ## Install
 
-Works with Claude Code and Codex:
+**Easiest - tell your agent.** Paste into Claude Code or Codex:
+
+> Install the skills from https://github.com/alex-on-ai/company-llm-wiki into this project.
+
+The agent follows the install notes below and confirms what it installed.
+
+**Terminal, global** (every project on the machine):
 
 ```bash
 git clone https://github.com/alex-on-ai/company-llm-wiki.git
 cd company-llm-wiki && ./install.sh
 ```
 
-Then in any folder: `/build-context-model` once, `/process-meeting` after each meeting, `/ingest` for anything else, `/refresh` weekly.
+**Terminal, this project only:** run `./install.sh --local` from inside your project folder (installs into `./.claude/skills`).
+
+Then: `/build-context-model` once, `/process-meeting` after each meeting, `/ingest` for anything else, `/refresh` weekly.
 
 Prefer a plain chat (ChatGPT, Claude, Gemini)? The same flows live in `prompts/` as paste-able prompts. `./install.sh --chatgpt` copies the interview pack to your clipboard, `./install.sh --chatgpt ingest` the ingest prompt.
+
+### Install notes for agents
+
+If a user asks you to install this repo's skills:
+
+1. Clone `https://github.com/alex-on-ai/company-llm-wiki.git` to a temporary location.
+2. Pick the destination: `./.claude/skills/` in the current project if the user said "into this project" (create the directory if missing); otherwise `~/.claude/skills/` plus `~/.codex/skills/` if it exists.
+3. Copy each folder under `skills/` into the destination. Into every installed skill folder also copy the repo's `llm-wiki.md`; into `build-context-model/` additionally copy `templates/` and `prompts/interview-prompt.md`.
+4. Remove the temporary clone, list the installed paths, and tell the user the skills may register only in a fresh agent session.
 
 ## Deliberately strict
 

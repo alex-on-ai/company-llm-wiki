@@ -9,7 +9,6 @@ This repo gives you:
 - **`templates/context-model-template.md`** — the 10-section Company Context Model template
 - **`prompts/interview-prompt.md`** — a universal interview prompt that runs in **any AI chat** (ChatGPT, Claude, Gemini, anything), no tools required
 - **A Claude Code skill** (`SKILL.md`) — the automated version: `/build` interviews you *or* harvests your existing materials (website, docs, repos) and asks only the gaps; `/refresh` keeps it current in 10 minutes a week
-- **`examples/`** — a real filled model (HighCraft.io — the one shown live at the Scale Academy webinar)
 
 ## The 10 sections
 

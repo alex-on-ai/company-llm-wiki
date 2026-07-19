@@ -157,7 +157,7 @@ Precondition: `context-model.md` exists (else suggest `/build`).
 
 # Dependencies
 
-Agent built-ins only (web fetch for harvest mode) - works the same in Claude Code and Codex CLI. No MCP servers required; if better tools are connected, use them opportunistically.
+Agent built-ins only (web fetch for harvest mode) - works the same in Claude Code and Codex. No MCP servers or API keys required. If better tools happen to be connected, use them opportunistically: Firecrawl for large or JS-heavy site crawls, Apify for LinkedIn pages that block plain fetch. Never require them; the fallback is always built-in fetch plus asking the user to paste blocked pages.
 
 # Attribution
 

@@ -67,11 +67,13 @@ else
     echo "Or install machine-wide from anywhere: ./install.sh --global"
     exit 1
   fi
-  for name in build-context-model process-meeting ingest; do
-    install_skill "${name}" "${PWD}/.claude/skills"
+  for dest in "${PWD}/.claude/skills" "${PWD}/.codex/skills"; do
+    for name in build-context-model process-meeting ingest; do
+      install_skill "${name}" "${dest}"
+    done
   done
   installed=1
-  echo "Installed into this project (./.claude/skills). Run your agent from this folder."
+  echo "Installed into this project (./.claude/skills + ./.codex/skills). Run your agent from this folder."
   echo "Machine-wide instead: ./install.sh --global"
 fi
 

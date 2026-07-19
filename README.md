@@ -55,7 +55,7 @@ Prefer a plain chat (ChatGPT, Claude, Gemini)? The same flows live in `prompts/`
 If a user asks you to install this repo's skills:
 
 1. Clone `https://github.com/alex-on-ai/company-llm-wiki.git` to a temporary location.
-2. Destination defaults to the current project: `./.claude/skills/` (create the directory if missing). Use `~/.claude/skills/` plus `~/.codex/skills/` only if the user explicitly asked for a global install.
+2. Destination defaults to the current project: BOTH `./.claude/skills/` and `./.codex/skills/` (create the directories if missing; Claude Code reads the first, Codex the second). Use `~/.claude/skills/` plus `~/.codex/skills/` only if the user explicitly asked for a global install.
 3. Copy each folder under `skills/` into the destination. Into every installed skill folder also copy the repo's `llm-wiki.md`; into `build-context-model/` additionally copy `templates/` and `prompts/interview-prompt.md`.
 4. Remove the temporary clone, list the installed paths, and tell the user the skills may register only in a fresh agent session.
 

@@ -16,12 +16,17 @@ The folder it maintains:
 
 ```
 [your-company]/
+├── AGENTS.md + CLAUDE.md the schema: how this wiki operates
 ├── llm-wiki.md           the pattern doc (Karpathy)
 ├── context-model.md      who we are; feeds every AI surface you use
+├── index.md              catalog: one line per wiki page
+├── log.md                append-only record of what happened when
 ├── raw/                  drop zone: transcripts, notes, letters
-├── wiki/                 linked pages: clients, meetings, projects
+├── wiki/                 linked pages: clients, meetings, projects, cases, topics
 └── output/               ready-to-use work: tasks, specs, draft letters
 ```
+
+The build writes the schema into the folder itself (`AGENTS.md` for Codex, `CLAUDE.md` for Claude Code, same content). That makes the wiki self-describing: any agent opened in the folder knows how to operate it, with or without these skills installed.
 
 ## Install
 

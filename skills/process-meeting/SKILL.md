@@ -14,8 +14,11 @@ The context model answers "who are we". Processing a meeting answers "what just 
 
 ```
 [company]/
+├── AGENTS.md + CLAUDE.md ← the schema (written by /build-context-model)
 ├── llm-wiki.md           ← the pattern doc (copy from the skill directory if missing; fallback: download https://raw.githubusercontent.com/alex-on-ai/company-llm-wiki/main/llm-wiki.md)
 ├── context-model.md      ← who we are (built by /build-context-model)
+├── index.md              ← one line per wiki page
+├── log.md                ← append-only op record
 ├── raw/                  ← drop zone: transcripts, notes, letters, documents
 ├── wiki/                 ← linked pages the agent maintains (clients, meetings, projects)
 └── output/               ← ready-to-use work products
@@ -47,6 +50,8 @@ Default package, written as files into `output/` (skip items the meeting doesn't
 4. **Spec** - when the meeting implies a deliverable (a prototype, a feature, a document), draft the spec/statement of work for it.
 5. **Client-facing draft** - follow-up letter or reply in the company's Voice, honoring commitments made in the meeting.
 6. **Risks** - anything said that threatens scope, deadline, or the relationship.
+
+Then close the books: update `index.md` for every page touched, and append to `log.md`: `## [YYYY-MM-DD] process | <meeting title>`.
 
 ## Closing message
 

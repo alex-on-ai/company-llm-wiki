@@ -43,23 +43,65 @@ Create the FULL structure immediately, before harvesting or interviewing - the u
 
 ```
 [slug]/
-├── llm-wiki.md           ← the original pattern doc (Karpathy), copied in for the agent to read
-├── context-model.md      ← the master document (written at Synthesis; this is what you upload/paste)
-├── raw/                  ← source material the model was built from (site dumps, docs, notes)
-├── wiki/                 ← linked pages, grown later by /ingest and /process-meeting
-└── output/               ← work products, written later by /process-meeting
+├── AGENTS.md             ← the schema: how this wiki operates (Codex reads this name)
+├── CLAUDE.md             ← same content (Claude Code reads this name)
+├── llm-wiki.md           ← the original pattern doc (Karpathy)
+├── context-model.md      ← the cornerstone page: who we are (written at Synthesis)
+├── index.md              ← catalog: one line per wiki page
+├── log.md                ← append-only record of what happened when
+├── raw/                  ← immutable source material (site dumps, docs, notes)
+├── wiki/                 ← linked pages the agent maintains
+└── output/               ← work products (drafts a human reviews)
 ```
 
-Get `llm-wiki.md` into the folder right away: copy it from this skill's own directory (the folder containing this SKILL.md); if you cannot locate it, download it from `https://raw.githubusercontent.com/alex-on-ai/company-llm-wiki/main/llm-wiki.md`.
+Then, in order:
 
-`context-model.md` is the only piece that arrives at the end (Synthesis step) - everything else exists from minute one. One master file, deliberately: multi-file structures rot; one file gets updated and uploaded everywhere.
+1. Get `llm-wiki.md` into the folder: copy from this skill's own directory (the folder containing this SKILL.md); if you cannot locate it, download `https://raw.githubusercontent.com/alex-on-ai/company-llm-wiki/main/llm-wiki.md`.
+2. **Read `llm-wiki.md`.** You are instantiating that pattern for a company; the file explains why each piece exists.
+3. Write `AGENTS.md` from the schema template below, and write the identical content to `CLAUDE.md`. With the schema in place, ANY agent opened in this folder knows how to operate the wiki - even without these skills installed. That is the point of the pattern.
+4. Create `index.md` (header only for now) and `log.md` with its first entry: `## [YYYY-MM-DD] build | folder scaffolded`.
+
+`context-model.md` is the only piece that arrives at the end (Synthesis step). It stays one master file, deliberately: it is the page every AI surface consumes, so it must remain uploadable as a single document.
+
+## The schema (write as AGENTS.md, copy to CLAUDE.md)
+
+```markdown
+# [Company] LLM wiki
+
+An LLM-maintained wiki about [Company], in the pattern of `llm-wiki.md` (read it once).
+The agent maintains everything except `raw/`; the human curates sources and reviews outputs.
+
+## Layers
+
+- `context-model.md` - the cornerstone: who we are. Read before any task. Update only via the refresh ritual, never silently.
+- `raw/` - immutable sources. Read, never modify. New material always lands here first.
+- `wiki/` - pages the agent creates and maintains: `clients/`, `meetings/`, `projects/`, `cases/`, `topics/`. Cross-link with `[[Page Name]]`.
+- `output/` - work products (task lists, specs, letters). Drafts only; a human sends. Frozen once shipped.
+- `index.md` - one line per wiki page. Update on every page change.
+- `log.md` - append-only: `## [YYYY-MM-DD] <op> | <subject>` where op is build / ingest / process / refresh / query.
+
+## Operations
+
+- **Ingest** (any material): file the knowledge into `wiki/` pages, cross-link, update `index.md`, append to `log.md`.
+- **Process a meeting**: ingest the transcript, then write to `output/`: team tasks with owners (from the Team section of the context model), owner action items, decisions waiting with recommendations, a spec when a deliverable is implied, a client-facing draft in the company Voice, risks.
+- **Refresh** (weekly): update changed sections of `context-model.md`, resolve markers, append changelog + log entry.
+
+## Rules
+
+1. Never invent facts. Unknowns stay visible as `(to clarify)`.
+2. Newer fact wins, and the page notes the change.
+3. Claims marked `⚠ UNVERIFIED` never enter client-facing output.
+4. Wiki pages and outputs in English; respond in the user's language.
+5. Anything client-facing is a draft. Never send or execute anything.
+```
 
 ## Harvest mode (materials exist)
 
 1. Read every provided source. Start from the website: fetch the key pages (home, services, about, cases). Then the LinkedIn page, the local folder's documents, decks, and any repo files. If a URL can't be fetched (login-walled, common for LinkedIn), use a connected browser tool if available; otherwise ask the user to paste the page text instead of skipping the source. Save extracts worth keeping into `raw/`.
 2. Draft ALL sections of `templates/context-model-template.md` from sources. Mark every fact you could not source as `[GAP]`.
-3. Ask the user ONLY the `[GAP]` questions - in batches of 3-4, never one by one. Skip entire batches that sources already answered.
-4. Then run the Verification pass (below).
+3. **File durable entities as wiki pages.** A website harvest typically yields 3-8 pages: one page per named case study or flagship product (`wiki/cases/`), plus topics worth their own page - named competitors, the market segment, a signature method (`wiki/topics/`). Link them from the relevant context-model sections with `[[Page Name]]`, add each to `index.md`. This is what makes the folder a wiki and not one file with empty directories.
+4. Ask the user ONLY the `[GAP]` questions - in batches of 3-4, never one by one. Skip entire batches that sources already answered.
+5. Then run the Verification pass (below).
 
 **Never pad.** A short, true section beats a full, invented one.
 
@@ -113,13 +155,17 @@ Unverified claims stay in the document but keep the `⚠ UNVERIFIED` marker. AI 
 
 Generate `context-model.md` from `templates/context-model-template.md` - 10 sections + changelog. Concreteness rule: if a section reads like it could describe any company in the industry, it is not done; push for the specific detail.
 
+Then close the books: update `index.md` (one line per page, context-model.md first), and append to `log.md`: `## [YYYY-MM-DD] build | context model built from <sources>, N wiki pages filed`.
+
 ## Closing message
 
 ```
-✅ Context model created.
+✅ LLM wiki set up for [Company].
 
-File: ./[slug]/context-model.md
-Gaps remaining: [N] (marked [GAP] / ⚠ UNVERIFIED inside)
+Cornerstone: ./[slug]/context-model.md
+Wiki pages:  [N] filed (see index.md)
+Schema:      AGENTS.md + CLAUDE.md - any agent opened here knows how this wiki works
+Gaps:        [N] (marked [GAP] / ⚠ UNVERIFIED inside)
 
 USE IT NOW:
 → ChatGPT: create a Project, upload context-model.md, ask anything

@@ -14,8 +14,11 @@ The librarian operation from `llm-wiki.md` (Andrej Karpathy, included in this fo
 
 ```
 [company]/
+├── AGENTS.md + CLAUDE.md ← the schema (written by /build-context-model)
 ├── llm-wiki.md           ← the pattern doc (copy from the skill directory if missing; fallback: download https://raw.githubusercontent.com/alex-on-ai/company-llm-wiki/main/llm-wiki.md)
 ├── context-model.md      ← who we are (built by /build-context-model)
+├── index.md              ← one line per wiki page
+├── log.md                ← append-only op record
 ├── raw/                  ← drop zone: anything worth keeping
 ├── wiki/                 ← linked pages the agent maintains
 └── output/               ← work products (written on request)
@@ -38,7 +41,9 @@ Create or update linked pages under `wiki/` for every entity the material touche
 
 Cross-link with `[[Page Name]]`. If a new fact contradicts an earlier one, the newer wins and the page notes the change. If the material affects who we are (pricing, positioning, team), flag that `context-model.md` needs a `/refresh` - do not edit it silently. Never invent facts; mark unknowns `(to clarify)`.
 
-## Step 3 - report
+## Step 3 - close the books and report
+
+Update `index.md` for every page touched; append to `log.md`: `## [YYYY-MM-DD] ingest | <source title>`. Then:
 
 ```
 ✅ Ingested: [source file]

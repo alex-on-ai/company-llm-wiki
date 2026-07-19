@@ -83,3 +83,5 @@ echo "Meetings : /process-meeting      - transcript in raw/ → wiki pages + tas
 echo "Anything : /ingest               - file any material into the wiki"
 echo "ChatGPT  : ./install.sh --chatgpt          (interview pack → clipboard)"
 echo "           ./install.sh --chatgpt ingest   (ingest prompt → clipboard)"
+echo ""
+echo "→ Restart your agent session (skills load at startup), then start with /build-context-model."

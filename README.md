@@ -36,13 +36,6 @@ cd context-model && ./install.sh
 
 Then in any project: `/context-model` (or just say "build my context model"). Point it at your website and docs — harvest mode drafts the model from what already exists.
 
-## Швидкий старт українською
-
-1. Відкрийте будь-який AI-чат (ChatGPT, Claude, Gemini). Якщо є проєкти — створіть проєкт і додайте `templates/context-model-template.md`; якщо ні — просто вставте шаблон у чат
-2. Вставте промпт із `prompts/interview-prompt.md` — він проведе інтервʼю (відповідати можна українською; сам документ буде англійською, це найкраще переноситься між AI-інструментами)
-3. Збережіть результат як `context-model.md`
-4. Перевірте різницю: попросіть відповідь на складний лист клієнта у чаті без моделі та з нею
-
 ## Where this comes from
 
 Structure inspired by [Volodymyr Kuts](https://github.com/boxa007)'s `company-context-model` ([profigent-lesson_1](https://github.com/boxa007/profigent-lesson_1), MIT) — a LinkedIn-pipeline foundation from the Profigent / Growth Factory leadgen program. This version generalizes it into a company-wide AI operating layer: harvest mode, Team and Operations sections, verification markers, multi-surface consumption; the LinkedIn audit and positioning phases were dropped (see upstream for those).

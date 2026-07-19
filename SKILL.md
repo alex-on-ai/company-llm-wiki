@@ -42,14 +42,14 @@ Confirm with the user in one message:
 ```
 [slug]/
 ├── context-model.md      ← the master document (this is what you upload/paste)
-└── sources/              ← raw inputs used to build it (dumps, notes, decks)
+└── raw/                  ← source material it was built from (site dumps, docs, notes)
 ```
 
 One master file, deliberately. Multi-file structures rot; one file gets updated and uploaded everywhere.
 
 ## Harvest mode (materials exist)
 
-1. Read every provided source. Start from the website: fetch the key pages (home, services, about, cases). Then read the local folder's documents, decks, and any repo files. Save extracts worth keeping into `sources/`.
+1. Read every provided source. Start from the website: fetch the key pages (home, services, about, cases). Then read the local folder's documents, decks, and any repo files. Save extracts worth keeping into `raw/`.
 2. Draft ALL sections of `templates/context-model-template.md` from sources. Mark every fact you could not source as `[GAP]`.
 3. Ask the user ONLY the `[GAP]` questions — in batches of 3-4, never one by one. Skip entire batches that sources already answered.
 4. Then run the Verification pass (below).

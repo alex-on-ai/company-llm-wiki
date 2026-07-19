@@ -46,7 +46,7 @@ mkdir your-company && cd your-company
 
 Run the installer from the folder that should contain `context-model.md`, `raw/`, `wiki/`, and `output/`. `/build-context-model` populates that exact folder; it does not create another `your-company/` directory inside it.
 
-Machine-wide instead (every project, Claude Code + Codex): `./install.sh --global`.
+Machine-wide instead (every project, Claude Code + Codex): `./install.sh --global` writes to `~/.claude/skills/` and `~/.agents/skills/`.
 
 Then: `/build-context-model` once, `/process-meeting` after each meeting, `/ingest` for anything else, `/refresh` weekly.
 
@@ -57,7 +57,7 @@ Prefer a plain chat (ChatGPT, Claude, Gemini)? The same flows live in `prompts/`
 If a user asks you to install this repo's skills, follow these steps exactly. Do NOT substitute a skills manager CLI (`npx skills` or similar), and never install globally (`-g`) - these skills are folder-scoped and belong to the project.
 
 1. Clone `https://github.com/alex-on-ai/company-llm-wiki.git` to a temporary location (simplest: run its `install.sh` from the user's project folder, which performs steps 2-3; the manual steps follow).
-2. Destination is the current project: BOTH `./.claude/skills/` and `./.codex/skills/` (create the directories if missing; Claude Code reads the first, Codex the second). Use `~/.claude/skills/` plus `~/.codex/skills/` only if the user explicitly asked for a global install.
+2. Destination is the current project: BOTH `./.claude/skills/` and `./.agents/skills/` (create the directories if missing; Claude Code reads the first, Codex scans the second from the working directory to the repository root). Use `~/.claude/skills/` plus `~/.agents/skills/` only if the user explicitly asked for a global install. Do not use project-local `.codex/skills`; it is not Codex's documented repository skill location.
 3. Copy ALL THREE folders under `skills/` (`build-context-model`, `process-meeting`, `ingest`) into each destination - a partial install is a failed install. Into every installed skill folder also copy the repo's `llm-wiki.md`; into `build-context-model/` additionally copy `templates/` and `prompts/interview-prompt.md`.
 4. Remove the temporary clone and verify: each destination contains the three skill folders, each with a `SKILL.md`.
 5. Treat "install" as "install and set up": the user's goal is a working company wiki, not files on disk. After verifying the install, immediately open the installed `build-context-model/SKILL.md`, read it fully, and execute it as your instructions in this same session (freshly installed skills register only in new sessions - that is why you execute the file directly). Do NOT end your turn after installing: your turn ends either on the build's step 0 questions to the user (exact wiki root, company name, sources - the consent gate) or after the build completes. The build must write root-level `context-model.md` immediately; optional gap questions never gate completion. Mention that from the next session onward the commands are `/build-context-model` (once), `/process-meeting` (every meeting), `/ingest` (anything else).

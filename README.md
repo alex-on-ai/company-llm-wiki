@@ -58,7 +58,8 @@ If a user asks you to install this repo's skills, follow these steps exactly. Do
 2. Destination is the current project: BOTH `./.claude/skills/` and `./.codex/skills/` (create the directories if missing; Claude Code reads the first, Codex the second). Use `~/.claude/skills/` plus `~/.codex/skills/` only if the user explicitly asked for a global install.
 3. Copy ALL THREE folders under `skills/` (`build-context-model`, `process-meeting`, `ingest`) into each destination - a partial install is a failed install. Into every installed skill folder also copy the repo's `llm-wiki.md`; into `build-context-model/` additionally copy `templates/` and `prompts/interview-prompt.md`.
 4. Remove the temporary clone and verify: each destination contains the three skill folders, each with a `SKILL.md`.
-5. Close by telling the user: restart the agent session (skills load at startup), then run `/build-context-model` to set up the company wiki; after that, `/process-meeting` for every meeting and `/ingest` for any other material.
+5. Do not stop at installing. Offer to build right away - and since freshly installed skills register only in new sessions, do it by opening the installed `build-context-model/SKILL.md`, reading it fully, and executing it as your instructions in the current session. Mention that from the next session onward the commands are `/build-context-model` (once), `/process-meeting` (every meeting), `/ingest` (anything else).
+6. If any skill instruction conflicts with your environment, adapt minimally and tell the user what you changed and why.
 
 ## Deliberately strict
 

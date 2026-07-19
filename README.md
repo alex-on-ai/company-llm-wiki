@@ -32,9 +32,9 @@ The build writes the schema into the folder itself (`AGENTS.md` for Codex, `CLAU
 
 **Easiest - tell your agent.** Paste into Claude Code or Codex:
 
-> Install the skills from https://github.com/alex-on-ai/company-llm-wiki into this project. Read that repo's README section "Install notes for agents" first and follow it exactly.
+> Install the skills from https://github.com/alex-on-ai/company-llm-wiki into this project, then build my company's context model. Read that repo's README section "Install notes for agents" first and follow it exactly.
 
-The agent installs locally, confirms what it installed, and flows straight into the build.
+The agent installs locally and flows straight into the build - the build's own step 0 asks you to confirm sources and location before anything is created.
 
 **Terminal.** The skills live with the company folder they operate on, so install from inside it:
 
@@ -58,7 +58,7 @@ If a user asks you to install this repo's skills, follow these steps exactly. Do
 2. Destination is the current project: BOTH `./.claude/skills/` and `./.codex/skills/` (create the directories if missing; Claude Code reads the first, Codex the second). Use `~/.claude/skills/` plus `~/.codex/skills/` only if the user explicitly asked for a global install.
 3. Copy ALL THREE folders under `skills/` (`build-context-model`, `process-meeting`, `ingest`) into each destination - a partial install is a failed install. Into every installed skill folder also copy the repo's `llm-wiki.md`; into `build-context-model/` additionally copy `templates/` and `prompts/interview-prompt.md`.
 4. Remove the temporary clone and verify: each destination contains the three skill folders, each with a `SKILL.md`.
-5. Do not stop at installing - start the build in the same session. Freshly installed skills register only in new sessions, so open the installed `build-context-model/SKILL.md`, read it fully, and execute it as your instructions now. Its step 0 asks the user to confirm output location, slug, and sources before anything is created, so starting immediately is safe. Mention that from the next session onward the commands are `/build-context-model` (once), `/process-meeting` (every meeting), `/ingest` (anything else).
+5. Treat "install" as "install and set up": the user's goal is a working company wiki, not files on disk. After verifying the install, immediately open the installed `build-context-model/SKILL.md`, read it fully, and execute it as your instructions in this same session (freshly installed skills register only in new sessions - that is why you execute the file directly). Do NOT end your turn after installing: your turn ends either on the build's step 0 questions to the user (location, slug, sources - the consent gate) or after the build completes. Mention that from the next session onward the commands are `/build-context-model` (once), `/process-meeting` (every meeting), `/ingest` (anything else).
 6. If any skill instruction conflicts with your environment, adapt minimally, tell the user what you changed and why, and record it in `./skill-feedback.md` in the project - that file is how improvements travel upstream (the user can open an issue or PR on this repo from it).
 
 ## Deliberately strict

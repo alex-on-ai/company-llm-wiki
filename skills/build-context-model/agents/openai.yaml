@@ -1,0 +1,3 @@
+interface:
+  display_name: "Build Context Model"
+  short_description: "Bootstrap a company LLM wiki and its context model"

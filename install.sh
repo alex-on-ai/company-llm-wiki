@@ -36,12 +36,6 @@ install_skill() {
   local dest="${dest_root}/${name}"
   mkdir -p "${dest}"
   cp -R "${SRC_DIR}/skills/${name}/." "${dest}/"
-  cp "${SRC_DIR}/llm-wiki.md" "${dest}/llm-wiki.md"
-  if [[ "${name}" == "build-context-model" ]]; then
-    mkdir -p "${dest}/templates" "${dest}/prompts"
-    cp "${SRC_DIR}/templates/context-model-template.md" "${dest}/templates/"
-    cp "${SRC_DIR}/prompts/interview-prompt.md" "${dest}/prompts/"
-  fi
   echo "✅ Installed: ${dest}"
 }
 

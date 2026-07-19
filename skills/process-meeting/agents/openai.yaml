@@ -1,0 +1,3 @@
+interface:
+  display_name: "Process Meeting"
+  short_description: "Meeting transcript to wiki pages, tasks, spec, and drafts"

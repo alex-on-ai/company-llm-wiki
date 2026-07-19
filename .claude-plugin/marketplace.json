@@ -1,0 +1,23 @@
+{
+  "name": "alex-on-ai",
+  "owner": {
+    "name": "Oleksandr Pavlov",
+    "url": "https://highcraft.io"
+  },
+  "description": "Company LLM Wiki - give AI your company's context once, then turn every meeting into filed knowledge and finished drafts.",
+  "plugins": [
+    {
+      "name": "company-llm-wiki",
+      "source": "./",
+      "description": "Build a company context model once, then process every meeting into wiki knowledge and ready work products. Karpathy's llm-wiki pattern, company-shaped.",
+      "category": "business",
+      "keywords": [
+        "context",
+        "company",
+        "wiki",
+        "meetings",
+        "operations"
+      ]
+    }
+  ]
+}

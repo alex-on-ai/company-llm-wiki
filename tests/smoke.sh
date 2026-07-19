@@ -50,6 +50,27 @@ if [[ -d "${GLOBAL_HOME}/.codex/skills" ]]; then
   exit 1
 fi
 
+# Self-contained skill folders: the skills.sh CLI copies only the skill folder,
+# so every asset a skill references must live inside it and match the root copy.
+for skill in build-context-model process-meeting ingest; do
+  cmp "${REPO_ROOT}/llm-wiki.md" "${REPO_ROOT}/skills/${skill}/llm-wiki.md"
+  test -f "${REPO_ROOT}/skills/${skill}/agents/openai.yaml"
+done
+cmp "${REPO_ROOT}/templates/context-model-template.md" "${REPO_ROOT}/skills/build-context-model/templates/context-model-template.md"
+cmp "${REPO_ROOT}/prompts/interview-prompt.md" "${REPO_ROOT}/skills/build-context-model/prompts/interview-prompt.md"
+
+# Claude Code plugin manifests parse and agree with each other.
+python3 - "${REPO_ROOT}" << 'PYEOF'
+import json, os, sys
+root = sys.argv[1]
+mp = json.load(open(os.path.join(root, ".claude-plugin", "marketplace.json")))
+pl = json.load(open(os.path.join(root, ".claude-plugin", "plugin.json")))
+assert mp["plugins"][0]["name"] == pl["name"] == "company-llm-wiki"
+for rel in pl["skills"]:
+    assert os.path.isfile(os.path.join(root, rel, "SKILL.md")), rel
+print("plugin manifests ok")
+PYEOF
+
 grep -Fq 'the confirmed wiki root is exact' "${REPO_ROOT}/skills/build-context-model/SKILL.md"
 grep -Fq 'Create `context-model.md` now' "${REPO_ROOT}/skills/build-context-model/SKILL.md"
 grep -Fq 'gaps do not block /process-meeting or /ingest' "${REPO_ROOT}/skills/build-context-model/SKILL.md"

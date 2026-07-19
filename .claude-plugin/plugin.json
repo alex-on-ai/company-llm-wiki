@@ -1,0 +1,25 @@
+{
+  "name": "company-llm-wiki",
+  "version": "1.0.0",
+  "description": "A small LLM-maintained wiki for your company: build the context model once, then turn every meeting into filed knowledge and finished drafts. Karpathy's llm-wiki pattern, company-shaped.",
+  "author": {
+    "name": "Oleksandr Pavlov",
+    "url": "https://highcraft.io"
+  },
+  "homepage": "https://github.com/alex-on-ai/company-llm-wiki",
+  "repository": "https://github.com/alex-on-ai/company-llm-wiki",
+  "license": "MIT",
+  "keywords": [
+    "context",
+    "company",
+    "wiki",
+    "meetings",
+    "operations",
+    "llm-wiki"
+  ],
+  "skills": [
+    "./skills/build-context-model",
+    "./skills/process-meeting",
+    "./skills/ingest"
+  ]
+}

@@ -122,7 +122,8 @@ USE IT NOW:
 → Claude Code: reference it from CLAUDE.md
 → n8n agent: paste into the system prompt as CONTEXT block
 
-MAINTAIN IT:
+NEXT:
+→ /ingest-meeting — drop a transcript in raw/, get wiki pages + tasks + drafts
 → /refresh weekly (10 min) — new wins, changed facts
 ```
 

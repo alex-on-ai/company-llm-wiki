@@ -1,41 +1,56 @@
 #!/usr/bin/env bash
-# Install the build-context-model skill for Claude Code and Codex CLI.
-# ./install.sh            → installs into ~/.claude/skills and ~/.codex/skills (whichever exist)
-# ./install.sh --chatgpt  → copies the ready-to-paste pack (interview prompt + template) to the clipboard
+# Install the company-llm-wiki skills (build-context-model + ingest-meeting)
+# for Claude Code and Codex CLI.
+# ./install.sh                   → installs into ~/.claude/skills and ~/.codex/skills (whichever exist)
+# ./install.sh --chatgpt         → copies the interview paste-pack (prompt + template) to the clipboard
+# ./install.sh --chatgpt ingest  → copies the ingest prompt to the clipboard
 set -euo pipefail
 
-SKILL_NAME="build-context-model"
 SRC_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [[ "${1:-}" == "--chatgpt" ]]; then
-  PACK="$(sed -n '/^## The prompt/,/^## After the interview/p' "${SRC_DIR}/prompts/interview-prompt.md" | sed '1d;$d')
+  if [[ "${2:-}" == "ingest" ]]; then
+    PACK="$(cat "${SRC_DIR}/prompts/ingest-prompt.md")"
+    LABEL="Ingest pack"
+  else
+    PACK="$(sed -n '/^## The prompt/,/^## After the interview/p' "${SRC_DIR}/prompts/interview-prompt.md" | sed '1d;$d')
 
 --- TEMPLATE (follow this structure) ---
 
 $(cat "${SRC_DIR}/templates/context-model-template.md")"
+    LABEL="Interview pack"
+  fi
   if command -v pbcopy >/dev/null 2>&1; then
     printf '%s' "${PACK}" | pbcopy
-    echo "✅ ChatGPT pack copied to clipboard."
-    echo "Paste it into a new ChatGPT chat (or a Project) and answer the interview."
+    echo "✅ ${LABEL} copied to clipboard — paste into any AI chat."
   else
     printf '%s\n' "${PACK}"
   fi
   exit 0
 fi
 
-install_to() {
-  local dest="$1/${SKILL_NAME}"
-  mkdir -p "${dest}/templates" "${dest}/prompts"
-  cp "${SRC_DIR}/SKILL.md" "${dest}/SKILL.md"
+install_skill() {
+  local name="$1" dest_root="$2"
+  local dest="${dest_root}/${name}"
+  mkdir -p "${dest}"
+  cp -R "${SRC_DIR}/skills/${name}/." "${dest}/"
   cp "${SRC_DIR}/llm-wiki.md" "${dest}/llm-wiki.md"
-  cp "${SRC_DIR}/templates/context-model-template.md" "${dest}/templates/"
-  cp "${SRC_DIR}/prompts/interview-prompt.md" "${dest}/prompts/"
+  if [[ "${name}" == "build-context-model" ]]; then
+    mkdir -p "${dest}/templates" "${dest}/prompts"
+    cp "${SRC_DIR}/templates/context-model-template.md" "${dest}/templates/"
+    cp "${SRC_DIR}/prompts/interview-prompt.md" "${dest}/prompts/"
+  fi
   echo "✅ Installed: ${dest}"
 }
 
 installed=0
-if [[ -d "${HOME}/.claude" ]]; then install_to "${HOME}/.claude/skills"; installed=1; fi
-if [[ -d "${HOME}/.codex" ]]; then install_to "${HOME}/.codex/skills"; installed=1; fi
+for root in "${HOME}/.claude" "${HOME}/.codex"; do
+  if [[ -d "${root}" ]]; then
+    install_skill "build-context-model" "${root}/skills"
+    install_skill "ingest-meeting" "${root}/skills"
+    installed=1
+  fi
+done
 
 if [[ "${installed}" == "0" ]]; then
   echo "No ~/.claude or ~/.codex found. Install Claude Code or Codex CLI first,"
@@ -43,5 +58,8 @@ if [[ "${installed}" == "0" ]]; then
   exit 1
 fi
 
-echo "Use it: /build-context-model  (or say: build my context model) — same command in Claude Code and Codex."
-echo "ChatGPT / any chat: ./install.sh --chatgpt copies the paste-pack to your clipboard."
+echo ""
+echo "Step one : /build-context-model  — build your company's context model (run once)"
+echo "Forever  : /ingest-meeting       — drop a transcript in raw/, get wiki pages + tasks + drafts"
+echo "ChatGPT  : ./install.sh --chatgpt          (interview pack → clipboard)"
+echo "           ./install.sh --chatgpt ingest   (ingest prompt → clipboard)"

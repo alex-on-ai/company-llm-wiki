@@ -26,14 +26,16 @@ Two things are deliberately strict:
 3. Answer 6 batches of questions → save the result as `context-model.md`
 4. Load that file wherever you work — the same document feeds every AI surface
 
-## Quick start — Claude Code
+## Install — Claude Code & Codex CLI
 
 ```bash
 git clone https://github.com/alex-on-ai/build-context-model.git
 cd build-context-model && ./install.sh
 ```
 
-Then in any project: `/build-context-model` (or just say "build my context model"). Point it at your website and docs — harvest mode drafts the model from what already exists.
+One script installs the skill into both `~/.claude/skills` and `~/.codex/skills` (whichever you have — same SKILL.md format). Then in any project: `/build-context-model` (or just say "build my context model"). Point it at your website and docs — harvest mode drafts the model from what already exists.
+
+**ChatGPT / any other chat:** `./install.sh --chatgpt` copies the full paste-pack (interview prompt + template) to your clipboard — paste into a new chat and answer.
 
 ## Where this comes from
 

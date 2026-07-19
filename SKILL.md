@@ -152,7 +152,7 @@ Precondition: `context-model.md` exists (else suggest `/build`).
 
 # Dependencies
 
-Claude Code built-ins only (WebFetch for harvest mode). No MCP servers required; if better tools are connected, use them opportunistically.
+Agent built-ins only (web fetch for harvest mode) — works the same in Claude Code and Codex CLI. No MCP servers required; if better tools are connected, use them opportunistically.
 
 # Attribution
 

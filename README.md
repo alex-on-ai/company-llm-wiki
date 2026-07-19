@@ -7,8 +7,8 @@ Every AI assistant — ChatGPT, Claude, an n8n agent — is a brilliant employee
 This repo gives you:
 
 - **`templates/context-model-template.md`** — the 10-section Company Context Model template
-- **A Claude Code skill** (`SKILL.md`) — builds the model for you: `/build` interviews you *or* harvests your existing materials (website, docs, repos) and asks only the gaps; `/refresh` keeps it current in 10 minutes a week
-- **`prompts/chatgpt-interview.md`** — the same process for plain ChatGPT, no tools required
+- **`prompts/interview-prompt.md`** — a universal interview prompt that runs in **any AI chat** (ChatGPT, Claude, Gemini, anything), no tools required
+- **A Claude Code skill** (`SKILL.md`) — the automated version: `/build` interviews you *or* harvests your existing materials (website, docs, repos) and asks only the gaps; `/refresh` keeps it current in 10 minutes a week
 - **`examples/`** — a real filled model (HighCraft.io — the one shown live at the Scale Academy webinar)
 
 ## The 10 sections
@@ -20,12 +20,12 @@ Two things are deliberately strict:
 1. **Verification markers.** Every claim in Proof is tagged `✓ confirmed` / `✓ source` / `⚠ UNVERIFIED`. AI consuming the model must not use unverified claims in client-facing output. AI that is allowed to invent your case studies will.
 2. **One master file.** Multi-file knowledge bases rot. One file gets refreshed weekly and uploaded everywhere.
 
-## Quick start — ChatGPT (no tools needed)
+## Quick start — any AI chat (no tools needed)
 
-1. Create a ChatGPT **Project**, upload `templates/context-model-template.md`
-2. Paste the prompt from `prompts/chatgpt-interview.md`
-3. Answer 6 batches of questions → save the result as `context-model.md` into the project
-4. Every chat in that project now knows your company
+1. Open your AI of choice; if it supports projects (ChatGPT Projects, Claude Projects, Gemini Gems), create one and attach `templates/context-model-template.md` — otherwise just paste the template into the chat
+2. Paste the prompt from `prompts/interview-prompt.md`
+3. Answer 6 batches of questions → save the result as `context-model.md`
+4. Load that file wherever you work — the same document feeds every AI surface
 
 ## Quick start — Claude Code
 
@@ -38,10 +38,10 @@ Then in any project: `/context-model` (or just say "build my context model"). Po
 
 ## Швидкий старт українською
 
-1. Створіть **Проєкт** у ChatGPT, завантажте `templates/context-model-template.md`
-2. Вставте промпт із `prompts/chatgpt-interview.md` — він проведе інтервʼю (відповідати можна українською; сам документ буде англійською, це найкраще переноситься між AI-інструментами)
-3. Збережіть результат як `context-model.md` у проєкт
-4. Перевірте різницю: попросіть відповідь на складний лист клієнта у чаті поза проєктом і всередині нього
+1. Відкрийте будь-який AI-чат (ChatGPT, Claude, Gemini). Якщо є проєкти — створіть проєкт і додайте `templates/context-model-template.md`; якщо ні — просто вставте шаблон у чат
+2. Вставте промпт із `prompts/interview-prompt.md` — він проведе інтервʼю (відповідати можна українською; сам документ буде англійською, це найкраще переноситься між AI-інструментами)
+3. Збережіть результат як `context-model.md`
+4. Перевірте різницю: попросіть відповідь на складний лист клієнта у чаті без моделі та з нею
 
 ## Where this comes from
 

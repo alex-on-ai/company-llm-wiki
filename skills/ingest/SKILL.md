@@ -14,7 +14,7 @@ The librarian operation from `llm-wiki.md` (Andrej Karpathy, included in this fo
 
 ```
 [company]/
-├── llm-wiki.md           ← the pattern doc (copy from the skill directory if missing)
+├── llm-wiki.md           ← the pattern doc (copy from the skill directory if missing; fallback: download https://raw.githubusercontent.com/alex-on-ai/company-llm-wiki/main/llm-wiki.md)
 ├── context-model.md      ← who we are (built by /build-context-model)
 ├── raw/                  ← drop zone: anything worth keeping
 ├── wiki/                 ← linked pages the agent maintains

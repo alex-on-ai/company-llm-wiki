@@ -14,7 +14,7 @@ The context model answers "who are we". Processing a meeting answers "what just 
 
 ```
 [company]/
-├── llm-wiki.md           ← the pattern doc (copy from the skill directory if missing)
+├── llm-wiki.md           ← the pattern doc (copy from the skill directory if missing; fallback: download https://raw.githubusercontent.com/alex-on-ai/company-llm-wiki/main/llm-wiki.md)
 ├── context-model.md      ← who we are (built by /build-context-model)
 ├── raw/                  ← drop zone: transcripts, notes, letters, documents
 ├── wiki/                 ← linked pages the agent maintains (clients, meetings, projects)

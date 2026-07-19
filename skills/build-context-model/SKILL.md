@@ -39,16 +39,20 @@ Confirm with the user in one message:
 
 ## Folder created
 
+Create the FULL structure immediately, before harvesting or interviewing - the user must see the whole machine after step 0, not just its first piece:
+
 ```
 [slug]/
 ├── llm-wiki.md           ← the original pattern doc (Karpathy), copied in for the agent to read
-├── context-model.md      ← the master document (this is what you upload/paste)
-└── raw/                  ← source material it was built from (site dumps, docs, notes)
+├── context-model.md      ← the master document (written at Synthesis; this is what you upload/paste)
+├── raw/                  ← source material the model was built from (site dumps, docs, notes)
+├── wiki/                 ← linked pages, grown later by /ingest and /process-meeting
+└── output/               ← work products, written later by /process-meeting
 ```
 
-Copy `llm-wiki.md` from the skill directory into the folder when creating it - the folder carries its own idea.
+Get `llm-wiki.md` into the folder right away: copy it from this skill's own directory (the folder containing this SKILL.md); if you cannot locate it, download it from `https://raw.githubusercontent.com/alex-on-ai/company-llm-wiki/main/llm-wiki.md`.
 
-One master file, deliberately. Multi-file structures rot; one file gets updated and uploaded everywhere.
+`context-model.md` is the only piece that arrives at the end (Synthesis step) - everything else exists from minute one. One master file, deliberately: multi-file structures rot; one file gets updated and uploaded everywhere.
 
 ## Harvest mode (materials exist)
 

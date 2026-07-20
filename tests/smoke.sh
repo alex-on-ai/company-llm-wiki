@@ -98,6 +98,7 @@ if grep -qi 'linkedin' "${REPO_ROOT}/skills/build-context-model/SKILL.md"; then
   exit 1
 fi
 grep -Fq 'Never create a public repo, and never push without this consent' "${REPO_ROOT}/skills/build-context-model/SKILL.md"
+grep -Fq 'ONE QUESTION BEFORE YOU GO' "${REPO_ROOT}/skills/build-context-model/SKILL.md"
 grep -Fq 'push when a remote exists' "${REPO_ROOT}/skills/process-meeting/SKILL.md"
 grep -Fq 'does not create another `your-company/` directory' "${REPO_ROOT}/README.md"
 grep -Fq -- '--skill "*" --agent codex claude-code -y' "${REPO_ROOT}/README.md"

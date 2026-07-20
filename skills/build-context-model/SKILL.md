@@ -187,14 +187,19 @@ NEXT:
 → /ingest - file any other material into the wiki
 → /file-tasks - create the team tasks in your connected tracker (Linear, Jira, ...)
 → /refresh weekly (10 min) - new wins, changed facts
+
+ONE QUESTION BEFORE YOU GO: version this wiki as a PRIVATE git repo
+and push it? (yes / local only / no) - recommended: it backs the wiki
+up and lets autonomous agents use it as task context.
 ```
 
-## Version the wiki (one offer, after the closing message)
+## Version the wiki (the closing message ends with this question)
 
-The wiki is most useful as a **private git repository**: versioned, recoverable, and reachable by autonomous agents that pick up tasks with this wiki as their context (`/file-tasks` adds a repo pointer to every task once a remote exists).
+The question above is part of the closing message template, not an optional extra: print it and end the turn waiting for the answer. Omit those template lines only when git is unavailable or the wiki root is already inside a git repository (then the turn ends after NEXT).
 
-- Skip this section silently when git is unavailable or the wiki root is already inside a git repository.
-- Otherwise ask once: "Version this wiki as a git repo and push it to a private GitHub repo? (yes / local only / no)"
+Why: the wiki is most useful as a **private git repository** - versioned, recoverable, and reachable by autonomous agents that pick up tasks with this wiki as their context (`/file-tasks` adds a repo pointer to every task once a remote exists).
+
+Handling the answer:
 - **yes** → `git init`, commit everything, then create a PRIVATE repo named after the folder and push (`gh repo create <folder-name> --private --source . --push` when the GitHub CLI is authenticated; if it is not, init + commit locally and print the exact manual commands for the user to create the private repo and push). Never create a public repo, and never push without this consent.
 - **local only** → init + commit, no remote.
 - **no** → skip; the wiki works fine as plain files.

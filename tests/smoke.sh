@@ -92,8 +92,11 @@ grep -Fq 'Gaps never block filing' "${REPO_ROOT}/skills/ingest/SKILL.md"
 grep -Fq 'No confirmation, no writes' "${REPO_ROOT}/skills/file-tasks/SKILL.md"
 grep -Fq 'offer to file the team tasks with `/file-tasks`' "${REPO_ROOT}/skills/process-meeting/SKILL.md"
 grep -Fq 'this command still files by default' "${REPO_ROOT}/skills/ingest/SKILL.md"
-grep -Fq 'you MUST attempt a browser tool before involving the user' "${REPO_ROOT}/skills/build-context-model/SKILL.md"
-grep -Fq 'A personal LinkedIn profile is a normal source, not a mistake' "${REPO_ROOT}/skills/build-context-model/SKILL.md"
+grep -Fq 'never parked without asking once' "${REPO_ROOT}/skills/build-context-model/SKILL.md"
+if grep -i 'linkedin' "${REPO_ROOT}/skills/build-context-model/SKILL.md" | grep -v 'profigent-lesson_1' | grep -qi 'linkedin'; then
+  echo "LinkedIn crept back into the build skill outside the Attribution section" >&2
+  exit 1
+fi
 grep -Fq 'Never create a public repo, and never push without this consent' "${REPO_ROOT}/skills/build-context-model/SKILL.md"
 grep -Fq 'push when a remote exists' "${REPO_ROOT}/skills/process-meeting/SKILL.md"
 grep -Fq 'does not create another `your-company/` directory' "${REPO_ROOT}/README.md"

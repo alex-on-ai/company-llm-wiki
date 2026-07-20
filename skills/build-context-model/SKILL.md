@@ -33,7 +33,7 @@ Confirm with the user in one message:
 
 1. **Wiki root** - the exact folder to populate. Default: the current working directory. This folder is both the project root and the wiki root.
 2. **Company name** - the name written into the schema and context model.
-3. **Existing materials** - most companies have three: a **website URL**, a **LinkedIn page** (company page or the founder's / CEO's personal profile - both are valid, and for founder-led companies the personal profile is often the richer source), and a **local folder with documents** (presentations, price lists, proposals, service descriptions). Also welcome: pitch deck, testimonials, prior briefs; for technical users - repo paths. This decides the mode:
+3. **Existing materials** - most companies have two: a **website URL** and a **local folder with documents** (presentations, price lists, proposals, service descriptions). Also welcome: pitch deck, testimonials, prior briefs; for technical users - repo paths. This decides the mode:
    - Anything provided → **harvest mode** (default)
    - Nothing → **interview mode** ("nothing" is fine - the interview covers it)
 
@@ -102,10 +102,7 @@ The agent maintains everything except `raw/`; the human curates sources and revi
 
 ## Harvest mode (materials exist)
 
-1. Read every provided source. Start from the website: fetch the key pages (home, services, about, cases). Then the LinkedIn page, the local folder's documents, decks, and any repo files. If a URL can't be fetched (login-walled, common for LinkedIn), you MUST attempt a browser tool before involving the user:
-   1. **Discover.** Browser and computer-use tools are usually deferred and absent from the visible tool list - search the environment's tool registry for them (ToolSearch in Claude Code; look for browser, chrome, computer-use). "Not in my current tools" without a registry search is not a real check.
-   2. **Use it.** Open the URL in the user's logged-in browser and extract the page text - a signed-in browser sees pages a plain fetch cannot.
-   3. Only if the registry search finds no browser tool at all, or the browser invocation itself errors, STOP and ask the user to paste the page text before continuing the harvest - and say which of the two happened. A personal LinkedIn profile is a normal source, not a mistake: harvest it into the Founder/Team and positioning sections and note the source - never pause to ask whether the user meant a company page instead. A source the user supplied is never parked without asking once - the non-blocking-gaps rule applies to missing facts, not to supplied sources. Only if the user declines or cannot provide it, record it as unresolved and continue. Save extracts worth keeping into `raw/`.
+1. Read every provided source. Start from the website: fetch the key pages (home, services, about, cases). Then the local folder's documents, decks, and any repo files. If a supplied URL can't be fetched (login-walled or blocked), try a connected browser tool when one exists; otherwise ask the user to paste the page text. A source the user supplied is never parked without asking once - the non-blocking-gaps rule applies to missing facts, not to supplied sources. Only if the user declines or cannot provide it, record it as unresolved and continue. Save extracts worth keeping into `raw/`.
 2. Update ALL sections of root-level `context-model.md` directly from sources. Mark every fact you could not source as `[GAP]`. Do not write a separate draft.
 3. **File durable entities as wiki pages.** A website harvest typically yields 3-8 pages: one page per named case study or flagship product (`wiki/cases/`), plus topics worth their own page - named competitors, the market segment, a signature method (`wiki/topics/`). Link them from the relevant context-model sections with `[[Page Name]]`, add each to `index.md`. This is what makes the folder a wiki and not one file with empty directories.
 4. Run the Verification pass (below) on the current model.
@@ -235,7 +232,7 @@ Precondition: `context-model.md` exists (else suggest `/build`).
 
 # Dependencies
 
-Agent built-ins only (web fetch for harvest mode) - works the same in Claude Code and Codex. No MCP servers or API keys required. For login-walled pages (common for LinkedIn), a browser tool MUST be attempted first (search the tool registry - browser tools are often deferred and need loading); asking the user to paste the page text is the fallback only after that attempt fails or finds nothing.
+Agent built-ins only (web fetch for harvest mode) - works the same in Claude Code and Codex. No MCP servers or API keys required. If a supplied URL is login-walled, use a connected browser tool when one exists or ask the user to paste the page text.
 
 # Attribution
 

@@ -10,7 +10,7 @@ Four commands:
 
 | Skill | What it does | How often |
 |---|---|---|
-| `/build-context-model` | Interviews you or harvests your website, LinkedIn and docs into the wiki (cases, topics, raw extracts), then distills `context-model.md` - the portable cornerstone every AI surface consumes | once |
+| `/build-context-model` | Interviews you or harvests your website and documents into the wiki (cases, topics, raw extracts), then distills `context-model.md` - the portable cornerstone every AI surface consumes | once |
 | `/process-meeting` | Ingests a transcript into linked wiki pages, then produces team tasks with owners, your action items, decisions with recommendations, a spec, client-facing drafts | every meeting |
 | `/ingest` | Files any other material into the wiki: articles, client emails, proposals, notes | as it arrives |
 | `/file-tasks` | Creates the meeting's team tasks in your connected task tracker (Linear, Jira, Asana, ...) - you confirm the exact batch first, duplicates are skipped, links come back | after `/process-meeting`, when a tracker is connected |
@@ -41,7 +41,7 @@ npx skills@latest add alex-on-ai/company-llm-wiki --skill "*" --agent codex clau
 
 2. This installs all four skills project-locally for Codex and Claude Code only. Agents load them on the next session.
 
-3. Restart your agent in that folder and run `/build-context-model`. It scaffolds the wiki, writes a usable `context-model.md` immediately, and asks only for what it cannot find on your website, LinkedIn, or documents.
+3. Restart your agent in that folder and run `/build-context-model`. It scaffolds the wiki, writes a usable `context-model.md` immediately, and asks only for what it cannot find on your website or documents.
 
 4. From then on: `/process-meeting` after every meeting, `/file-tasks` to put its team tasks on your board, `/ingest` for anything else, `/refresh` weekly.
 

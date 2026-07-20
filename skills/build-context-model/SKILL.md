@@ -236,4 +236,4 @@ Agent built-ins only (web fetch for harvest mode) - works the same in Claude Cod
 
 # Attribution
 
-The wiki pattern this instantiates is Andrej Karpathy's "LLM Wiki" - included verbatim as `llm-wiki.md` (the file itself says it "is designed to be copy pasted to your own LLM Agent"). Skill structure inspired by Volodymyr Kuts's `company-context-model` (Profigent, [boxa007/profigent-lesson_1](https://github.com/boxa007/profigent-lesson_1), MIT) - generalized from a LinkedIn-pipeline foundation to a company-wide AI operating layer: added harvest mode, Team and Operations sections, the verification pass, and multi-surface consumption; dropped the LinkedIn profile-audit and positioning-research phases (see upstream for those).
+The wiki pattern this instantiates is Andrej Karpathy's "LLM Wiki" - included verbatim as `llm-wiki.md` (the file itself says it "is designed to be copy pasted to your own LLM Agent").

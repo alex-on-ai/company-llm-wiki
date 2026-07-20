@@ -118,7 +118,7 @@ The build skill bundles the canonical `llm-wiki.md` bootstrap asset. It copies t
 
 ## Where this comes from
 
-The wiki pattern is [Andrej Karpathy's "LLM Wiki"](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f), included verbatim as `llm-wiki.md`. Skill structure inspired by [Volodymyr Kuts](https://github.com/boxa007)'s `company-context-model` ([profigent-lesson_1](https://github.com/boxa007/profigent-lesson_1), MIT), generalized from a LinkedIn-pipeline foundation into a company-wide AI operating layer. Repo packaging (skills.sh + Claude Code plugin + Codex metadata) follows the pattern of [mattpocock/skills](https://github.com/mattpocock/skills).
+The wiki pattern is [Andrej Karpathy's "LLM Wiki"](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f), included verbatim as `llm-wiki.md`. Repo packaging (skills.sh + Claude Code plugin + Codex metadata) follows the pattern of [mattpocock/skills](https://github.com/mattpocock/skills).
 
 Built by [Oleksandr Pavlov](https://www.linkedin.com/in/alex-on-ai/), CEO [HighCraft.io](https://highcraft.io).
 
